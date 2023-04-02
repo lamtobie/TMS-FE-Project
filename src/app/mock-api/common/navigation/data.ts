@@ -13,8 +13,15 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id   : 'station',
         title: 'Station',
         type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
+        icon : 'heroicons_outline:office-building',
         link : '/station'
+    },
+    {
+        id   : 'employee',
+        title: 'Employee',
+        type : 'basic',
+        icon : 'heroicons_outline:users',
+        link : '/employee'
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
