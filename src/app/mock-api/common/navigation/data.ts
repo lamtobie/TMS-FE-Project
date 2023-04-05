@@ -11,17 +11,31 @@ export const defaultNavigation: FuseNavigationItem[] = [
     },
     {
         id   : 'station',
-        title: 'Station',
+        title: 'Station Management',
         type : 'basic',
         icon : 'heroicons_outline:office-building',
         link : '/station'
     },
     {
         id   : 'employee',
-        title: 'Employee',
+        title: 'Employee Management',
         type : 'basic',
         icon : 'heroicons_outline:users',
         link : '/employee'
+    },
+    {
+        id   : 'deliveryoder',
+        title: 'Delivery Oder Management',
+        type : 'basic',
+        icon : 'heroicons_outline:cube',
+        link : '/deliveryoder'
+    },
+    {
+        id   : 'handoversession',
+        title: 'Handover Management',
+        type : 'basic',
+        icon : 'heroicons_outline:cog',
+        link : '/handoversession'
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [

@@ -15,7 +15,7 @@
         <!-- Title -->
         <div class="mt-0">
             <h2 class="text-2xl md:text-2xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                Employee Management
+                Delivery Order Management
             </h2>
         </div>
     </div>
@@ -23,9 +23,16 @@
         <div class="flex shrink-0 items-center mt-4 sm:mt-2 sm:ml-2">
             <a class="ml-3" mat-flat-button [color]="'primary'">
                 <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:plus-circle'"></mat-icon>
-                New employee
+                New Delivery Oder
             </a>
-
+            <a class="ml-3" mat-flat-button [color]="'primary'">
+                <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
+                Handover Scan
+            </a>
+            <a class="ml-3" mat-flat-button [color]="'primary'">
+                <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:receipt-refund'"></mat-icon>
+                Get Refunds
+            </a>
             <a class="ml-3" mat-flat-button [color]="'primary'">
                 <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:document-report'"></mat-icon>
                 Export
@@ -42,7 +49,7 @@
                         <div class="w-full">
                             <mat-form-field class="w-full" [floatLabel]="'always'">
                                 <mat-icon matPrefix class="icon-size-5" [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                                <input placeholder="ID, Station name, Contact person, phone" matInput [formControlName]="'keyword'" #input />
+                                <input placeholder="Keyword" matInput [formControlName]="'keyword'" #input />
                             </mat-form-field>
                         </div>
                         <mat-form-field color="primary">
@@ -56,8 +63,8 @@
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field color="primary">
-                            <mat-select  [formControlName]="'employeetype'">
-                                <mat-option [value]="''">All kinds of employees</mat-option>
+                            <mat-select  [formControlName]="'deliveryservice'">
+                                <mat-option [value]="''">All kinds of Delivery service</mat-option>
                                 <mat-option [value]="'ready'">Ready</mat-option>
                                 <mat-option [value]="'standby'">Stand-by</mat-option>
                                 <mat-option [value]="'warranty'">Warranty</mat-option>
@@ -67,14 +74,55 @@
                         </mat-form-field>
                     </div>
                     <div class="mt-0 grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
-                        <mat-form-field appearance="fill" class="w-full">
-                            <mat-date-range-input [formGroupName]="'range'" [rangePicker]="picker">
-                                <input matStartDate [formControlName]="'start'" placeholder="Start date">
-                                <input matEndDate [formControlName]="'end'" placeholder="End date">
-                            </mat-date-range-input>
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-date-range-picker #picker></mat-date-range-picker>
+                        <mat-form-field color="primary">
+                            <mat-select  [formControlName]="'driver'">
+                                <mat-option [value]="''">All Drivers</mat-option>
+                                <mat-option [value]="'ready'">Ready</mat-option>
+                                <mat-option [value]="'standby'">Stand-by</mat-option>
+                                <mat-option [value]="'warranty'">Warranty</mat-option>
+                                <mat-option [value]="'outofservice'">Out of service</mat-option>
+                                <mat-option [value]="'lost'">Lost</mat-option>
+                            </mat-select>
                         </mat-form-field>
+                        <mat-form-field color="primary">
+                            <mat-select  [formControlName]="'coordinator'">
+                                <mat-option [value]="''">All Coordinator</mat-option>
+                                <mat-option [value]="'ready'">Ready</mat-option>
+                                <mat-option [value]="'standby'">Stand-by</mat-option>
+                                <mat-option [value]="'warranty'">Warranty</mat-option>
+                                <mat-option [value]="'outofservice'">Out of service</mat-option>
+                                <mat-option [value]="'lost'">Lost</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field color="primary">
+                            <input matInput [matDatepicker]="createday" placeholder="Create day">
+                            <mat-datepicker-toggle matIconSuffix [for]="createday"></mat-datepicker-toggle>
+                            <mat-datepicker #createday></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+                        <mat-form-field color="primary">
+                            <input matInput [matDatepicker]="deliveryday" placeholder="Delivery day">
+                            <mat-datepicker-toggle matIconSuffix [for]="deliveryday"></mat-datepicker-toggle>
+                            <mat-datepicker #deliveryday></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field color="primary">
+                            <input matInput [matDatepicker]="finishday" placeholder="Finish day">
+                            <mat-datepicker-toggle matIconSuffix [for]="finishday"></mat-datepicker-toggle>
+                            <mat-datepicker #finishday></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field color="primary">
+                            <mat-select  [formControlName]="'pickuppoint'">
+                                <mat-option [value]="''">All Pick-up Point</mat-option>
+                                <mat-option [value]="'ready'">Ready</mat-option>
+                                <mat-option [value]="'standby'">Stand-by</mat-option>
+                                <mat-option [value]="'warranty'">Warranty</mat-option>
+                                <mat-option [value]="'outofservice'">Out of service</mat-option>
+                                <mat-option [value]="'lost'">Lost</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
                         <div class="w-full">
                             <button mat-flat-button color="primary" class="w-full sm:w-30 h-36px-button" >
                                 <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:search'"></mat-icon>
@@ -90,7 +138,7 @@
                     <div class="flex flex-col flex-auto overflow-x-auto">
                         <div class="flex items-center text-xl mb-4">
                             <mat-icon class="icon-size-6" [svgIcon]="'heroicons_solid:puzzle'" [color]="'primary'"></mat-icon>
-                            <div class="ml-2 font-medium">Emloyee List</div>
+                            <div class="ml-2 font-medium">Delivery Order List</div>
                         </div>
                         <table mat-table [dataSource]="dataStation"  multiTemplateDataRows class="mat-elevation-z8">
                             <ng-container matColumnDef="stt">
@@ -101,68 +149,28 @@
                                     {{element.stt}}
                                 </td>
                             </ng-container>
-                            <ng-container matColumnDef="code">
+                            <ng-container matColumnDef="docode">
                                 <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Code
+                                    DO Code
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     {{element.code}}
                                 </td>
                             </ng-container>
-                            <ng-container matColumnDef="name">
+                            <ng-container matColumnDef="childrencode">
                                 <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    First & Last Name
+                                    Reference Code
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     {{element.fullName}}
                                 </td>
                             </ng-container>
-                            <ng-container matColumnDef="phone">
+                            <ng-container matColumnDef="numberofpackage">
                                 <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Phone Number
+                                    Number of Packages
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     {{element.mobilePhone}}
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="type">
-                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Employee Type
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.employeeType}}
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="station">
-                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Station
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.threePLTeam}}
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="ismanager">
-                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Station Manager
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.contactEmail}}
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="service">
-                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Service
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.service}}
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="datecreate">
-                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Date Create
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.createdAt}}
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="status">
@@ -171,6 +179,38 @@
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     {{element.status}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="pickuppoint">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Pick-up Point
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.startAddress}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="deliveryservice">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Delivery Service
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.deliveryService}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="cod">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Cod Amount
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.codAmount}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="driver">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Driver
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.driverCode}}
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="action">

@@ -3,14 +3,14 @@ import { FormBuilder, FormGroup, NgForm } from "@angular/forms";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from "@angular/material/table";
 import { List } from "lodash";
-import { EmployeeModel } from "models/employee/employeeModel";
+import { StationModel } from "models/station/stationModel";
 
 @Component({
-    selector     : 'employee',
-    templateUrl  : './employee.component.html',
+    selector     : 'handoversession',
+    templateUrl  : './handoversession.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class Employee
+export class HandoverSession
 {
     @ViewChild("supportNgForm") supportNgForm: NgForm;
     @ViewChild("attachqueue") attachQueue: ElementRef;
@@ -18,19 +18,17 @@ export class Employee
     @ViewChild("content") content: ElementRef;
 
     supportForm: FormGroup;
-    dataStation: MatTableDataSource<EmployeeModel>;
-    data:EmployeeModel[]=[
-        {stt:1,code: '1',fullName:"Lâm Tobie",employeeType:"Driver",mobilePhone:'0329723060',threePLTeam:"Station A",service:"Giao hàng nhanh", createdAt:992001,status:'new'},
+    dataStation: MatTableDataSource<StationModel>;
+    data:StationModel[]=[
+        {stt:1,code: '1',name:"Station A",contactPerson:"Tobie",contactPhone:'0329723060',contactEmail:"lam321093@gmail.com",createdAt:992001,status:'new'},
     ];
     displayCols2: string[] = [
         'stt',
-        'code',
-        'name',
-        'phone',
-        'type',
-        'station',
-        'ismanager',
-        'service',
+        'stationid',
+        'stationname',
+        'user',
+        'phonenumber',
+        'email',
         'datecreate',
         'status',
         'action'
@@ -44,14 +42,13 @@ export class Employee
     {
     }
 
-
     /**
    * On init
    */
   ngOnInit(): void {
       this.createForm();
       //this.initData();
-      this.dataStation = new MatTableDataSource<EmployeeModel>(this.data);
+      this.dataStation = new MatTableDataSource<StationModel>(this.data);
       this.dataStation.paginator=this.paginator;
   }
     createForm() {
@@ -59,12 +56,15 @@ export class Employee
           // Create the support form
           this.supportForm = this._formBuilder.group({
             keyword: "",
-            status: "",
-            employeetype: "",
+            coordinator:"",
+            driver:"",
+            pickuppoint:"",
+            endpoint:"",
             range: this._formBuilder.group({
                 start: [""],
                 end: [""],
               }),
+            status: "",
           });
         }
     }

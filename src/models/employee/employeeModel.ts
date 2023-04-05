@@ -6,6 +6,7 @@ export interface InitEmployeePageState extends InitCategoryPageState<EmployeeMod
 export type EmployeeType = 'Driver' | 'Coordinator'
 
 export interface EmployeeModel extends TrackableModel {
+    stt:number,
     code: string,
     employeeType: string,
     fullName: string,
@@ -16,6 +17,7 @@ export interface EmployeeModel extends TrackableModel {
     threePLTeam?: string,
     status: string,
     password?: string,
+    service?:string,
     avatarPicture?: string,
     identityNumberPicture?: string,
     drivingLicensePicture?: string,
