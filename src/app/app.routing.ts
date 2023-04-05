@@ -79,7 +79,8 @@ export const appRoutes: Route[] = [
             {path: 'station', loadChildren: () => import('app/modules/station/station.module').then(m => m.StationModule)},
             {path: 'employee', loadChildren: () => import('app/modules/employee/employee.module').then(m => m.EmployeeModule)},
             {path: 'vehicle', loadChildren: () => import('app/modules/vehicle/vehicle.module').then(m => m.VehicleModule)},
-            
+            {path: 'deliveryoder', loadChildren: () => import('app/modules/deleveryoder/deliveryoder.module').then(m => m.DeliveryOderModule)},
+            {path: 'handoversession', loadChildren: () => import('app/modules/handoversession/handoversession.module').then(m => m.HandoverModule)},
         ]
     },{
         path: '**',

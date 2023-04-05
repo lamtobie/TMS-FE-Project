@@ -3,14 +3,14 @@ import { FormBuilder, FormGroup, NgForm } from "@angular/forms";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from "@angular/material/table";
 import { List } from "lodash";
-import { EmployeeModel } from "models/employee/employeeModel";
+import { DeliveryOrderModel } from "models/deliveryOrder/deliveryOrderModel";
 
 @Component({
-    selector     : 'employee',
-    templateUrl  : './employee.component.html',
+    selector     : 'deliveryoder',
+    templateUrl  : './deliveryoder.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class Employee
+export class DeliveryOder
 {
     @ViewChild("supportNgForm") supportNgForm: NgForm;
     @ViewChild("attachqueue") attachQueue: ElementRef;
@@ -18,21 +18,20 @@ export class Employee
     @ViewChild("content") content: ElementRef;
 
     supportForm: FormGroup;
-    dataStation: MatTableDataSource<EmployeeModel>;
-    data:EmployeeModel[]=[
-        {stt:1,code: '1',fullName:"Lâm Tobie",employeeType:"Driver",mobilePhone:'0329723060',threePLTeam:"Station A",service:"Giao hàng nhanh", createdAt:992001,status:'new'},
+    dataStation: MatTableDataSource<DeliveryOrderModel>;
+    data:DeliveryOrderModel[]=[
+        {stt:1,code: '1',startAddress:"127 Phan Văn Trị",deliveryService:"Giao hàng nhanh",codAmount:5000000,threePLTeam:"Station A",driverCode:"LâmTobie-0329723060",status:'new'},
     ];
     displayCols2: string[] = [
         'stt',
-        'code',
-        'name',
-        'phone',
-        'type',
-        'station',
-        'ismanager',
-        'service',
-        'datecreate',
+        'docode',
+        'childrencode',
+        'numberofpackage',
         'status',
+        'pickuppoint',
+        'deliveryservice',
+        'cod',
+        'driver',
         'action'
     ];
     /**
@@ -51,7 +50,7 @@ export class Employee
   ngOnInit(): void {
       this.createForm();
       //this.initData();
-      this.dataStation = new MatTableDataSource<EmployeeModel>(this.data);
+      this.dataStation = new MatTableDataSource<DeliveryOrderModel>(this.data);
       this.dataStation.paginator=this.paginator;
   }
     createForm() {
@@ -60,7 +59,13 @@ export class Employee
           this.supportForm = this._formBuilder.group({
             keyword: "",
             status: "",
-            employeetype: "",
+            driver:"",
+            coordinator:"",
+            createday:"",
+            deliveryday:"",
+            finishday:"",
+            pickuppoint:"",
+            deliveryservice: "",
             range: this._formBuilder.group({
                 start: [""],
                 end: [""],

@@ -5,7 +5,7 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { Route, RouterModule } from '@angular/router';
-import { Employee } from './employee.component';
+import { DeliveryOder } from './deliveryoder.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
@@ -13,22 +13,21 @@ import { CommonModule } from '@angular/common';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from 'app/shared/shared.module';
-import { EmptyLayoutComponent } from 'app/layout/layouts/empty/empty.component';
 
 
-const employeeRoutes: Route[] = [
+const deliveryOderRoutes: Route[] = [
     {
         path     : '',
-        component: Employee
+        component: DeliveryOder
     }
 ];
 
 @NgModule({
     declarations: [
-        Employee
+        DeliveryOder
     ],
     imports     : [
-        RouterModule.forChild(employeeRoutes),
+        RouterModule.forChild(deliveryOderRoutes),
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
@@ -45,6 +44,6 @@ const employeeRoutes: Route[] = [
 
     ]
 })
-export class EmployeeModule
+export class DeliveryOderModule
 {
 }

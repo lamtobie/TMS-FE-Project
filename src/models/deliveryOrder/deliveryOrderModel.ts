@@ -42,11 +42,13 @@ export interface DeliveryPackageModel extends TrackableModel {
 }
 
 export interface DeliveryOrderModel {
+    stt:number,
     code?: string,
     parentCode?: string,
     groupCode?: string,
     driverCode?: string,
     coordinatorCode?: string,
+    deliveryService?:string,
     sessionCode?: string,
     referenceCode?: string,
     productType?: string,
