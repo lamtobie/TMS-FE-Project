@@ -22,6 +22,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:users',
         link : '/employee'
+    },
+    {
+        id   : 'vehicle',
+        title: 'Vehicle Management',
+        type : 'basic',
+        icon : 'heroicons_outline:truck',
+        link : '/vehicle'
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
