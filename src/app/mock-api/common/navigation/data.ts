@@ -24,19 +24,26 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : '/employee'
     },
     {
+        id   : 'handoversession',
+        title: 'Handover Management',
+        type : 'basic',
+        icon : 'heroicons_outline:cog',
+        link : '/handoversession'
+    },
+    {
+        id   : 'vehicle',
+        title: 'Vehicle Management',
+        type : 'basic',
+        icon : 'heroicons_outline:truck',
+        link : '/vehicle'
+    },
+    {
         id   : 'deliveryoder',
         title: 'Delivery Oder Management',
         type : 'basic',
         icon : 'heroicons_outline:cube',
         link : '/deliveryoder'
     },
-    {
-        id   : 'handoversession',
-        title: 'Handover Management',
-        type : 'basic',
-        icon : 'heroicons_outline:cog',
-        link : '/handoversession'
-    }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
     {
