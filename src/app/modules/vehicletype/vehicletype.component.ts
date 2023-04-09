@@ -3,15 +3,14 @@ import { FormBuilder, FormGroup, NgForm } from "@angular/forms";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from "@angular/material/table";
 import { List } from "lodash";
-import { StationModel } from "models/station/stationModel";
-import { VehicleModel } from "models/vehicle/vehicleModel";
+import { VehicleTypeModel } from "models/vehicle/vehicleTypeModel";
 
 @Component({
-    selector     : 'vehicle',
-    templateUrl  : './vehicle.component.html',
+    selector     : 'vehicletype',
+    templateUrl  : './vehicletype.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class Vehicle
+export class VehicleType
 {
     @ViewChild("supportNgForm") supportNgForm: NgForm;
     @ViewChild("attachqueue") attachQueue: ElementRef;
@@ -19,15 +18,17 @@ export class Vehicle
     @ViewChild("content") content: ElementRef;
 
     supportForm: FormGroup;
-    dataVehicle: MatTableDataSource<VehicleModel>;
-    data:VehicleModel[]=[
+    dataVehicleType: MatTableDataSource<VehicleTypeModel>;
+    data:VehicleTypeModel[]=[
         //{stt:1,code: '1',vehicleInfo:"Station A",contactPerson:"Tobie",contactPhone:'0329723060',contactEmail:"lam321093@gmail.com",createdAt:992001,status:'new'},
     ];
     displayCols2: string[] = [
         'stt',
-        // 'vehicletypecode',
-        'vehicletypename',
-        'numberPlate',
+        'code',
+        'name',
+        'height',
+        'maximumCapacity',
+        'maximumPayload',
         'status',
         'createAt',
         'action'
@@ -48,8 +49,8 @@ export class Vehicle
   ngOnInit(): void {
       this.createForm();
       //this.initData();
-      this.dataVehicle = new MatTableDataSource<VehicleModel>(this.data);
-      this.dataVehicle.paginator=this.paginator;
+      this.dataVehicleType = new MatTableDataSource<VehicleTypeModel>(this.data);
+      this.dataVehicleType.paginator=this.paginator;
   }
     createForm() {
         if (!this.supportForm) {
