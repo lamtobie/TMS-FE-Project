@@ -1,9 +1,9 @@
 import { InitCategoryPageState } from '../commons/initStateModel';
 import { TrackableModel } from '../commons/trackableModel';
 
-export interface InitVehicleTypePageState extends InitCategoryPageState<VehicleType> { }
+export interface InitVehicleTypePageState extends InitCategoryPageState<VehicleTypeModel> { }
 
-export interface VehicleType extends TrackableModel {
+export interface VehicleTypeModel extends TrackableModel {
     code: string,
     name: string,
     status?: string,
@@ -11,5 +11,6 @@ export interface VehicleType extends TrackableModel {
     width?: number,
     height?: number,
     maximumCapacity?: number,
-    maximumPayload?: number
+    maximumPayload?: number,
+    createAt?: string,
 }
