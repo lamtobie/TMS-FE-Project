@@ -76,11 +76,13 @@ export const appRoutes: Route[] = [
         },
         children   : [
             {path: 'example', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)},
-            {path: 'station', loadChildren: () => import('app/modules/station/station.module').then(m => m.StationModule)},
+            {path: 'station', loadChildren: () => import('app/modules/station/stationlist/stationlist.module').then(m => m.StationListModule)},
             {path: 'employee', loadChildren: () => import('app/modules/employee/employee.module').then(m => m.EmployeeModule)},
             {path: 'vehicle', loadChildren: () => import('app/modules/vehicle/vehicle.module').then(m => m.VehicleModule)},
             {path: 'deliveryoder', loadChildren: () => import('app/modules/deleveryoder/deliveryoder.module').then(m => m.DeliveryOderModule)},
             {path: 'handoversession', loadChildren: () => import('app/modules/handoversession/handoversession.module').then(m => m.HandoverModule)},
+            {path: 'stationnew', loadChildren: () => import('app/modules/station/stationnew/stationnew.module').then(m => m.StationNewModule)},
+
         ]
     },{
         path: '**',
