@@ -140,52 +140,12 @@
                                     {{element.stt}}
                                 </td>
                             </ng-container>
-                            <ng-container matColumnDef="stationid">
+                            <ng-container matColumnDef="code">
                                 <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Station ID
+                                    Code
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     {{element.code}}
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="stationname">
-                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Station Name
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.name}}
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="user">
-                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Contact User
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.contactPerson}}
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="phonenumber">
-                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Contact Phone
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.contactPhone}}
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="email">
-                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Contact Email
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.contactEmail}}
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="datecreate">
-                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Date Create
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.createdAt}}
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="status">
@@ -194,6 +154,62 @@
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     {{element.status}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="start">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Start Point
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.startStationCode}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="end">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    End point
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.endStationCode}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="coordinator">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Coordinator
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.coordinatorCode}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="driver">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Driver
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.driverCode}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="vehicle">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Vehicle
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.vehicleCode}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="dos">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Total Number of DO
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.totalDOs}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="pks">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Total Number of DP
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.totalDPs}}
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="action">

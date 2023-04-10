@@ -28,6 +28,7 @@ export interface DeliverySessionLineModel extends TrackableModel {
 }
 
 export interface DeliverySessionModel extends TrackableModel {
+    stt:number,
     code: string,
     sessionType?: string,
     parentCode?: string,
@@ -44,7 +45,7 @@ export interface DeliverySessionModel extends TrackableModel {
     endStation?: StationModel,
     sessionGroupCode?: string,
     toCustomer?: boolean,
-    deliverySessionLines: DeliverySessionLineModel[],
+    deliverySessionLines?: DeliverySessionLineModel[],
     allDeliverySessionLines?: DeliverySessionLineModel[],
     childrens?: DeliverySessionModel[],
     additional?: DataAttributeModel[],
