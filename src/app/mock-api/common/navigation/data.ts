@@ -31,6 +31,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : '/handoversession'
     },
     {
+        id   : 'vehicletype',
+        title: 'Vehicle Type Management',
+        type : 'basic',
+        icon : 'heroicons_outline:truck',
+        link : '/vehicletype'
+    },
+    {
         id   : 'vehicle',
         title: 'Vehicle Management',
         type : 'basic',
