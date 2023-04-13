@@ -6,20 +6,20 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Route, Router } from "@angular/router";
 import { List } from "lodash";
 import { StationModel } from "models/station/stationModel";
-import { StationService } from "../station.service";
 import { AWARD_LIST, CITY_LIST, DISTRICT_LIST, REGION_LIST } from "app/shared/province";
 import { AddressModel } from "models/address/addressModel";
 import { CONSTANT } from "app/shared/constants";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { FuseAlertService } from "@fuse/components/alert";
 import { PaginationParamsModel } from "models/commons/requestModel";
+import { StationService } from "app/modules/station/station.service";
 
 @Component({
-    selector     : 'stationnew',
-    templateUrl  : './stationnew.component.html',
+    selector     : 'coordinatornew',
+    templateUrl  : './coordinatornew.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class StationNew
+export class CoordinatorNew
 {
     @ViewChild("supportNgForm") supportNgForm: NgForm;
     @ViewChild("attachqueue") attachQueue: ElementRef;
@@ -232,7 +232,7 @@ export class StationNew
         this.stationEdited.address.slicWard=this.supportForm.get('ward').value;
         this.stationEdited.status=this.supportForm.get('status').value;
 
-        this.stationService.updateStation(this.stationEdited).subscribe({
+        this.stationService.updateStation(this.station).subscribe({
             next: (result) => {
                 if (result.success == true) {
                     const confirmation = this._fuseAlertnService.open({

@@ -1,0 +1,283 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- header -->
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-3 pb-4 sm:pt-2 sm:pb-6 sm:px-15 bg-default dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <div>
+                <div class="-ml-4">
+                    <button mat-button [color]="'primary'" (click)="onBack()">
+                        <mat-icon [svgIcon]="'heroicons_outline:arrow-narrow-left'"></mat-icon>
+                        <span class="ml-2">Back</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Title -->
+            <div *ngIf="isAddShow" class="mt-0">
+                <h2 class="text-2xl md:text-2xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    New Driver
+                </h2>
+            </div>
+            <div *ngIf="isEditShow || isViewShow" class="mt-0">
+                <h2 class="text-2xl md:text-2xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    Detail of Driver "{{ employeeName }}"
+                </h2>
+            </div>
+        </div>
+    </div>
+    <!-- Main -->
+    <div class="flex-auto -mt-2 p-4 sm:p-6 shadow bg-card">
+        <div class="flex flex-col flex-auto overflow-x-auto">
+            <div class="flex flex-col flex-auto overflow-hidden">
+                <!-- CONTENT GOES HERE -->
+                <form class="space-y-3" [formGroup]="supportForm" #supportNgForm="ngForm">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">Employee Code:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <input matInput [formControlName]="'code'" />
+                            </mat-form-field>
+                        </div>
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-4">Full Name:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <input matInput [formControlName]="'name'"
+                                    placeholder="Employee's full name..."/>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">Email:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <input matInput [formControlName]="'email'" 
+                                placeholder="Employee's email..." />
+                            </mat-form-field>
+                        </div>
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">Password:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <input
+                                    id="password"
+                                    matInput
+                                    type="password"
+                                    [formControlName]="'password'"
+                                    placeholder="Employee's password..."
+                                    #passwordField>
+                                <button
+                                    mat-icon-button
+                                    type="button"
+                                    (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
+                                    matSuffix>
+                                    <mat-icon
+                                        class="icon-size-5"
+                                        *ngIf="passwordField.type === 'password'"
+                                        [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+                                    <mat-icon
+                                        class="icon-size-5"
+                                        *ngIf="passwordField.type === 'text'"
+                                        [svgIcon]="'heroicons_solid:eye-off'"></mat-icon>
+                                </button>
+                                <mat-error>
+                                    Please fill this field!
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">ID Number:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <input matInput [formControlName]="'idnumber'" 
+                                placeholder="Employee's ID number..." />
+                            </mat-form-field>
+                        </div>
+                        <div class="flex sm:flex-row items-center justify-between w-full max-w-xs sm:max-w-none">
+                            <div class="flex fuse-mat-no-subscript sans-semibold w-50">
+                                <span class="mx-auto mr-4">Service: </span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-select [formControlName]="'services'" multiple floatlLabel="never" placeholder="Choose Service">
+                                    <mat-option [value]="'Giao Hàng Tiêu Chuẩn'">Giao Hàng Tiêu Chuẩn</mat-option>
+                                    <mat-option [value]="'Giao Hàng Nhanh'">Giao Hàng Nhanh</mat-option>
+                                    <mat-option [value]="'Giao Hoả Tốc'">Giao Hoả Tốc</mat-option>
+                                    <mat-option [value]="'Trung Chuyển'">Trung Chuyển</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">Phone:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <input matInput [formControlName]="'phone'" 
+                                placeholder="Employee's phone number ..." (focusout)="validatePhoneNumber()" />
+                            </mat-form-field>
+                        </div>
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">Address:</span>
+                            </div>
+                                <mat-form-field class="fuse-mat-no-subscript w-full">
+                                    <input matInput [formControlName]="'address'"
+                                        placeholder="Employee's address..." />
+                                </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">Lat:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <input matInput [formControlName]="'lat'" 
+                                placeholder="Employee's Lat Address ..." />
+                            </mat-form-field>
+                        </div>
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">Long:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <input matInput [formControlName]="'long'"
+                                    placeholder="Employee's long Address..." />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between w-full max-w-xs sm:max-w-none">
+                            <div class="flex fuse-mat-no-subscript sans-semibold w-50">
+                                <span class="mx-auto mr-4">Region: </span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-select [formControlName]="'region'">
+                                    <mat-option *ngFor="let option of regionList" [value]="option.id">
+                                        {{option.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex sm:flex-row items-center justify-between w-full max-w-xs sm:max-w-none">
+                            <div class="flex fuse-mat-no-subscript sans-semibold w-50">
+                                <span class="mx-auto mr-4">Province: </span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-select [formControlName]="'province'">
+                                    <mat-option *ngFor="let option of cityList" [value]="option.id">
+                                        {{option.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between w-full max-w-xs sm:max-w-none">
+                            <div class="flex fuse-mat-no-subscript sans-semibold w-50">
+                                <span class="mx-auto mr-4">District: </span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-select [formControlName]="'district'">
+                                    <mat-option *ngFor="let option of districtList" [value]="option.id">
+                                        {{option.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex sm:flex-row items-center justify-between w-full max-w-xs sm:max-w-none">
+                            <div class="flex fuse-mat-no-subscript sans-semibold w-50">
+                                <span class="mx-auto mr-4">Ward: </span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-select [formControlName]="'ward'">
+                                    <mat-option *ngFor="let option of wardList" [value]="option.id">
+                                        {{option.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-1 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-40 sans-semibold">
+                                <span class="mx-auto mr-2">Station:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-select [formControlName]="'station'" floatlLabel="never" placeholder="Choose station">
+                                    <mat-option *ngFor="let option of stationList" [value]="option.code">
+                                        {{option.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div *ngIf="!isAddShow" class="mt-0 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between w-full max-w-xs sm:max-w-none">
+                            <div class="flex fuse-mat-no-subscript sans-semibold w-50">
+                                <span class="mx-auto mr-4">Status: </span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-select [formControlName]="'status'">
+                                    <mat-option [value]="'active'">Active</mat-option>
+                                    <mat-option [value]="'not-active'">Inactive</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-1 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between w-full max-w-xs sm:max-w-none ">
+                            <div class="flex fuse-mat-no-subscript sans-semibold w-description ">
+                                <span class="mx-auto mr-4 ">Pick a file: </span>
+                            </div>
+                            <ngx-awesome-uploader #uploader [adapter]="adapter " [enableCropper]="false ">
+                            </ngx-awesome-uploader>
+                        </div>
+                    </div>
+                   
+                    <div class="mt-8 mb-10 border-t"></div>
+                    <div class="container mx-auto">
+                        <div class="mt-8 grid grid-cols-1 sm:grid-cols-6 gap-4 md:gap-6">
+                            <div *ngIf="!isViewShow" class="w-full" id="clear">
+                                <button mat-stroked-button color="primary" class="w-full" (click)="clearButton()">
+                                    <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:minus-circle'"></mat-icon>
+                                    Clear
+                                </button>
+                            </div>
+                            <div *ngIf="isAddShow" class="w-full" id="add">
+                                <button mat-stroked-button color="primary" class="w-full" (click)="createEmployee()">
+                                    <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:save'"></mat-icon>
+                                    Add
+                                </button>
+                            </div>
+                            <div *ngIf="isEditShow" class="w-full" id="edit">
+                                <button mat-stroked-button color="primary" class="w-full" (click)="updateEmployee()">
+                                    <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:save'"></mat-icon>
+                                    Edit
+                                </button>
+                            </div>
+                            <div *ngIf="!isViewShow" class="w-full" id="cancel">
+                                <button mat-stroked-button class="w-full" color="warn" (click)="moveToEmployee()">
+                                    <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

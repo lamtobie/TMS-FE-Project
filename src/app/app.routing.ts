@@ -77,12 +77,15 @@ export const appRoutes: Route[] = [
         children   : [
             {path: 'example', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)},
             {path: 'station', loadChildren: () => import('app/modules/station/stationlist/stationlist.module').then(m => m.StationListModule)},
-            {path: 'employee', loadChildren: () => import('app/modules/employee/employee.module').then(m => m.EmployeeModule)},
+            {path: 'employee', loadChildren: () => import('app/modules/employee/employeelist/employeelist.module').then(m => m.EmployeeListModule)},
             {path: 'vehicle', loadChildren: () => import('app/modules/vehicle/vehicle.module').then(m => m.VehicleModule)},
             {path: 'vehicletype', loadChildren: () => import('app/modules/vehicletype/vehicletype.module').then(m => m.VehicleTypeModule)},
             {path: 'deliveryoder', loadChildren: () => import('app/modules/deleveryoder/deliveryoder.module').then(m => m.DeliveryOderModule)},
             {path: 'handoversession', loadChildren: () => import('app/modules/handoversession/handoversession.module').then(m => m.HandoverModule)},
             {path: 'stationnew', loadChildren: () => import('app/modules/station/stationnew/stationnew.module').then(m => m.StationNewModule)},
+            {path: 'changepassword', loadChildren: () => import('app/modules/employee/changepassword/changepassword.module').then(m => m.ChangePasswordModule)},
+            {path: 'drivernew', loadChildren: () => import('app/modules/employee/driveradd/driveradd.module').then(m => m.DriverAddModule)},
+            {path: 'coordinatornew', loadChildren: () => import('app/modules/employee/coordinatornew/coordiatornew.module').then(m => m.CoordinatorNewModule)},
 
         ]
     },{

@@ -21,12 +21,15 @@
     </div>
         <!-- Actions -->
         <div class="flex shrink-0 items-center mt-4 sm:mt-2 sm:ml-2">
-            <a class="ml-3" mat-flat-button [color]="'primary'">
+            <a class="ml-3" mat-raised-button [color]="'primary'" (click)=" moveToDriverNew()">
                 <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:plus-circle'"></mat-icon>
-                New employee
+                Add New Driver
             </a>
-
-            <a class="ml-3" mat-flat-button [color]="'primary'">
+            <a class="ml-3" mat-raised-button [color]="'primary'"  (click)="moveToCoordinatorNew()">
+                <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:plus-circle'"></mat-icon>
+                Add New Coordinator
+            </a>
+            <a class="ml-3" mat-flat-button [color]="'primary'" (click)="exportExcel()">
                 <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:document-report'"></mat-icon>
                 Export
             </a>
@@ -42,27 +45,21 @@
                         <div class="w-full">
                             <mat-form-field class="w-full" [floatLabel]="'always'">
                                 <mat-icon matPrefix class="icon-size-5" [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                                <input placeholder="ID, Station name, Contact person, phone" matInput [formControlName]="'keyword'" #input />
+                                <input placeholder="ID, Station code, First & Last name, phone" matInput [formControlName]="'keyword'" #input />
                             </mat-form-field>
                         </div>
                         <mat-form-field color="primary">
                             <mat-select  [formControlName]="'status'">
                                 <mat-option [value]="''">All status</mat-option>
-                                <mat-option [value]="'ready'">Ready</mat-option>
-                                <mat-option [value]="'standby'">Stand-by</mat-option>
-                                <mat-option [value]="'warranty'">Warranty</mat-option>
-                                <mat-option [value]="'outofservice'">Out of service</mat-option>
-                                <mat-option [value]="'lost'">Lost</mat-option>
+                                <mat-option [value]="'active'">Active</mat-option>
+                                <mat-option [value]="'not-active'">Not-Active</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field color="primary">
                             <mat-select  [formControlName]="'employeetype'">
                                 <mat-option [value]="''">All kinds of employees</mat-option>
-                                <mat-option [value]="'ready'">Ready</mat-option>
-                                <mat-option [value]="'standby'">Stand-by</mat-option>
-                                <mat-option [value]="'warranty'">Warranty</mat-option>
-                                <mat-option [value]="'outofservice'">Out of service</mat-option>
-                                <mat-option [value]="'lost'">Lost</mat-option>
+                                <mat-option [value]="'driver'">Driver</mat-option>
+                                <mat-option [value]="'coordinator'">Coordinator</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -76,11 +73,11 @@
                             <mat-date-range-picker #picker></mat-date-range-picker>
                         </mat-form-field>
                         <div class="w-full">
-                            <button mat-flat-button color="primary" class="w-full sm:w-30 h-36px-button" >
+                            <button mat-flat-button color="primary" class="w-full sm:w-30 h-36px-button" (click)="getEmployees()">
                                 <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:search'"></mat-icon>
                                 Search
                             </button>
-                            <button mat-stroked-button color="primary" class="mt-4 md:mt-0 w-50 md:w-auto md:ml-4 h-36px-button" >
+                            <button mat-stroked-button color="primary" class="mt-4 md:mt-0 w-50 md:w-auto md:ml-4 h-36px-button" (click)="refresh()">
                                 <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:refresh'"></mat-icon>
                             </button>
                         </div>
@@ -92,7 +89,7 @@
                             <mat-icon class="icon-size-6" [svgIcon]="'heroicons_solid:puzzle'" [color]="'primary'"></mat-icon>
                             <div class="ml-2 font-medium">Emloyee List</div>
                         </div>
-                        <table mat-table [dataSource]="dataStation"  multiTemplateDataRows class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataEmployee"  multiTemplateDataRows class="mat-elevation-z8" id="table">
                             <ng-container matColumnDef="stt">
                                 <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
                                     STT
@@ -130,7 +127,10 @@
                                     Employee Type
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.employeeType}}
+                                    <div [ngSwitch]="element.employeeType">
+                                        <p *ngSwitchCase="'driver'">Driver</p>
+                                        <p *ngSwitchCase="'coordinator'">Coordinator</p>
+                                    </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="station">
@@ -138,7 +138,7 @@
                                     Station
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.threePLTeam}}
+                                    {{element.stationCode}}
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="ismanager">
@@ -146,7 +146,7 @@
                                     Station Manager
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.contactEmail}}
+                                    {{element.isStationAdmin}}
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="service">
@@ -154,7 +154,7 @@
                                     Service
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.service}}
+                                    {{element.services}}
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="datecreate">
@@ -162,7 +162,7 @@
                                     Date Create
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.createdAt}}
+                                    {{convertNumToDate(element.createdAt)}}                                
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="status">
@@ -170,7 +170,10 @@
                                     Status
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.status}}
+                                    <div [ngSwitch]="element.status">
+                                        <p *ngSwitchCase="'active'">Active</p>
+                                        <p *ngSwitchCase="'not-active'">Inactive</p>
+                                    </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="action">
@@ -179,12 +182,38 @@
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     <div class="flex items-center">
-                                        <button class="ml-1 -mr-4" mat-icon-button >
-                                            <mat-icon
-                                                class="icon-size-5 text-accent-400"
-                                                [svgIcon]="'heroicons_solid:trash'"
-                                            ></mat-icon>
-                                            
+                                        <button class="mx-auto" mat-icon-button [matTooltip]="element.requestContent" [matTooltipPosition]="'left'" [matMenuTriggerFor]="actionPanel">
+                                                    <mat-icon class="icon-size-6 font-bold" [svgIcon]="'heroicons_outline:dots-circle-horizontal'"></mat-icon>
+                                                    <mat-menu #actionPanel>
+                                                        
+                                                        <button mat-menu-item
+                                                        [matTooltip]="element.note"
+                                                        [matTooltipPosition]="'left'"
+                                                        (click)="viewItem(element.code,element.employeeType, $event)"
+                                                        >
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:document-report'"></mat-icon>
+                                                            View detail
+                                                        </button>
+                                                        <button mat-menu-item (click)="editItem(element.code,element.employeeType, $event)">
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:cog'"></mat-icon>
+                                                            Edit
+                                                        </button>
+                                                        <button mat-menu-item (click)="updateEmployeeStatus(element.code,'active')">
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:lock-open'"></mat-icon>
+                                                            Active
+                                                        </button>
+                                                        <button mat-menu-item (click)="updateEmployeeStatus(element.code,'not-active')">
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:lock-closed'"></mat-icon>
+                                                            Inactive
+                                                        </button>
+                                                        <button mat-menu-item (click)="openChangePassword(element.code)">
+                                                            <mat-icon
+                                                                class="icon-size-4"
+                                                                [svgIcon]="'heroicons_outline:key'"
+                                                            ></mat-icon>
+                                                            Change password
+                                                        </button>
+                                                    </mat-menu>
                                         </button>
                                     </div>
                                 </td>
