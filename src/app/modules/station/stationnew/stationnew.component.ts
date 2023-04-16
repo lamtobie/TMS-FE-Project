@@ -232,7 +232,7 @@ export class StationNew
         this.stationEdited.address.slicWard=this.supportForm.get('ward').value;
         this.stationEdited.status=this.supportForm.get('status').value;
 
-        this.stationService.updateStation(this.station).subscribe({
+        this.stationService.updateStation(this.stationEdited).subscribe({
             next: (result) => {
                 if (result.success == true) {
                     const confirmation = this._fuseAlertnService.open({

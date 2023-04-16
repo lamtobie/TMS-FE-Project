@@ -12,38 +12,43 @@ import { CommonModule } from '@angular/common';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from 'app/shared/shared.module';
-import { Vehicle } from './vehicle.component';
+import { FuseAlertModule } from '@fuse/components/alert';
+import { CoordinatorNew } from './coordinatornew.component';
+import { FilePickerModule } from 'ngx-awesome-uploader';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
-const vehicleRoutes: Route[] = [
+const coordinatorNewRoutes: Route[] = [
     {
         path     : '',
-        component: Vehicle
+        component: CoordinatorNew
     }
 ];
 
 @NgModule({
     declarations: [
-        Vehicle
+        CoordinatorNew
     ],
     imports     : [
-        RouterModule.forChild(vehicleRoutes),
+        RouterModule.forChild(coordinatorNewRoutes),
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
         SharedModule,
-        MatDatepickerModule,
+        MatDatepickerModule,     
         MatSelectModule,
         MatTableModule,
         CommonModule,
+        FuseAlertModule,
         MatMomentDateModule,
         MatPaginatorModule,
-        MatMenuModule
-
+        MatMenuModule,
+        FilePickerModule,
+        MatCheckboxModule,
 
     ]
 })
-export class VehicleModule
+export class CoordinatorNewModule
 {
 }

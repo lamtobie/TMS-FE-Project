@@ -5,7 +5,6 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { Route, RouterModule } from '@angular/router';
-import { StationList } from './stationlist.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
@@ -14,29 +13,23 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from 'app/shared/shared.module';
 import { FuseAlertModule } from '@fuse/components/alert';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatListModule } from '@angular/material/list';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import { MatCardModule } from '@angular/material/card';
-import { HttpClientModule } from '@angular/common/http';
+import { DriverAdd } from './driveradd.component';
+import { FilePickerModule } from 'ngx-awesome-uploader';
 
 
-const stationListRoutes: Route[] = [
+const driverAddRoutes: Route[] = [
     {
         path     : '',
-        component: StationList
+        component: DriverAdd
     }
 ];
 
 @NgModule({
     declarations: [
-        StationList
+        DriverAdd
     ],
     imports     : [
-        RouterModule.forChild(stationListRoutes),
-        HttpClientModule,
+        RouterModule.forChild(driverAddRoutes),
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
@@ -46,19 +39,13 @@ const stationListRoutes: Route[] = [
         MatSelectModule,
         MatTableModule,
         CommonModule,
+        FuseAlertModule,
         MatMomentDateModule,
         MatPaginatorModule,
         MatMenuModule,
-        FuseAlertModule,
-        MatSlideToggleModule,
-        MatToolbarModule,
-        MatProgressBarModule,
-        MatListModule,
-        MatSidenavModule,
-        MatCardModule,
-
+        FilePickerModule,
     ]
 })
-export class StationListModule
+export class DriverAddModule
 {
 }

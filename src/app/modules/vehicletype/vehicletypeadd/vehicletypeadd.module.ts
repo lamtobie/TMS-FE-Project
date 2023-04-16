@@ -5,7 +5,6 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { Route, RouterModule } from '@angular/router';
-import { Employee } from './employee.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
@@ -13,22 +12,23 @@ import { CommonModule } from '@angular/common';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from 'app/shared/shared.module';
-import { EmptyLayoutComponent } from 'app/layout/layouts/empty/empty.component';
+import { FuseAlertModule } from '@fuse/components/alert';
+import { VehicletypeAdd } from './vehicletypeadd.component';
 
 
-const employeeRoutes: Route[] = [
+const vehicletypeAddRoutes: Route[] = [
     {
         path     : '',
-        component: Employee
+        component: VehicletypeAdd
     }
 ];
 
 @NgModule({
     declarations: [
-        Employee
+        VehicletypeAdd
     ],
     imports     : [
-        RouterModule.forChild(employeeRoutes),
+        RouterModule.forChild(vehicletypeAddRoutes),
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
@@ -38,6 +38,7 @@ const employeeRoutes: Route[] = [
         MatSelectModule,
         MatTableModule,
         CommonModule,
+        FuseAlertModule,
         MatMomentDateModule,
         MatPaginatorModule,
         MatMenuModule
@@ -45,6 +46,6 @@ const employeeRoutes: Route[] = [
 
     ]
 })
-export class EmployeeModule
+export class VehicletypeAddModule
 {
 }

@@ -5,7 +5,6 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { Route, RouterModule } from '@angular/router';
-import { StationList } from './stationlist.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
@@ -21,22 +20,22 @@ import { MatListModule } from '@angular/material/list';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
+import { EmployeeList } from './employeelist.component';
 
 
-const stationListRoutes: Route[] = [
+const employeelistRoutes: Route[] = [
     {
         path     : '',
-        component: StationList
+        component: EmployeeList
     }
 ];
 
 @NgModule({
     declarations: [
-        StationList
+        EmployeeList
     ],
     imports     : [
-        RouterModule.forChild(stationListRoutes),
-        HttpClientModule,
+        RouterModule.forChild(employeelistRoutes),
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
@@ -56,9 +55,8 @@ const stationListRoutes: Route[] = [
         MatListModule,
         MatSidenavModule,
         MatCardModule,
-
     ]
 })
-export class StationListModule
+export class EmployeeListModule
 {
 }

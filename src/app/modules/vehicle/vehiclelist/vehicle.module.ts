@@ -12,38 +12,51 @@ import { CommonModule } from '@angular/common';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from 'app/shared/shared.module';
-import { VehicleType } from './vehicletype.component';
+import { FuseAlertModule } from '@fuse/components/alert';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
+import { Vehicle } from './vehicle.component';
 
 
-const vehicleTypeRoutes: Route[] = [
+const vehicleRoutes: Route[] = [
     {
         path     : '',
-        component: VehicleType
+        component: Vehicle
     }
 ];
 
 @NgModule({
     declarations: [
-        VehicleType
+        Vehicle
     ],
     imports     : [
-        RouterModule.forChild(vehicleTypeRoutes),
+        RouterModule.forChild(vehicleRoutes),
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
         SharedModule,
-        MatDatepickerModule,
+        MatDatepickerModule,     
         MatSelectModule,
         MatTableModule,
         CommonModule,
         MatMomentDateModule,
         MatPaginatorModule,
-        MatMenuModule
-
+        MatMenuModule,
+        FuseAlertModule,
+        MatSlideToggleModule,
+        MatToolbarModule,
+        MatProgressBarModule,
+        MatListModule,
+        MatSidenavModule,
+        MatCardModule,
 
     ]
 })
-export class VehicleTypeModule
+export class VehicleModule
 {
 }

@@ -15,18 +15,18 @@
         <!-- Title -->
         <div class="mt-0">
             <h2 class="text-2xl md:text-2xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                Employee Management
+                Vehicle Management
             </h2>
         </div>
     </div>
         <!-- Actions -->
         <div class="flex shrink-0 items-center mt-4 sm:mt-2 sm:ml-2">
-            <a class="ml-3" mat-flat-button [color]="'primary'">
+            <a class="ml-3" mat-flat-button [color]="'primary'" (click)="moveToVehicleNew()">
                 <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:plus-circle'"></mat-icon>
-                New employee
+                New vehicle
             </a>
 
-            <a class="ml-3" mat-flat-button [color]="'primary'">
+            <a class="ml-3" mat-flat-button [color]="'primary'" (click)="exportExcel()">
                 <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:document-report'"></mat-icon>
                 Export
             </a>
@@ -42,31 +42,17 @@
                         <div class="w-full">
                             <mat-form-field class="w-full" [floatLabel]="'always'">
                                 <mat-icon matPrefix class="icon-size-5" [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                                <input placeholder="ID, Station name, Contact person, phone" matInput [formControlName]="'keyword'" #input />
+                                <input placeholder="Number Plate" matInput [formControlName]="'keyword'" #input />
                             </mat-form-field>
                         </div>
                         <mat-form-field color="primary">
-                            <mat-select  [formControlName]="'status'">
-                                <mat-option [value]="''">All status</mat-option>
-                                <mat-option [value]="'ready'">Ready</mat-option>
-                                <mat-option [value]="'standby'">Stand-by</mat-option>
-                                <mat-option [value]="'warranty'">Warranty</mat-option>
-                                <mat-option [value]="'outofservice'">Out of service</mat-option>
-                                <mat-option [value]="'lost'">Lost</mat-option>
+                            <mat-select  [formControlName]="'type'">
+                                <mat-option [value]="''">All vehicle type</mat-option>
+                                <mat-option *ngFor="let option of vehicleTypeList" [value]="option.code">
+                                    {{option.name}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <mat-form-field color="primary">
-                            <mat-select  [formControlName]="'employeetype'">
-                                <mat-option [value]="''">All kinds of employees</mat-option>
-                                <mat-option [value]="'ready'">Ready</mat-option>
-                                <mat-option [value]="'standby'">Stand-by</mat-option>
-                                <mat-option [value]="'warranty'">Warranty</mat-option>
-                                <mat-option [value]="'outofservice'">Out of service</mat-option>
-                                <mat-option [value]="'lost'">Lost</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
                         <mat-form-field appearance="fill" class="w-full">
                             <mat-date-range-input [formGroupName]="'range'" [rangePicker]="picker">
                                 <input matStartDate [formControlName]="'start'" placeholder="Start date">
@@ -75,12 +61,21 @@
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-date-range-picker #picker></mat-date-range-picker>
                         </mat-form-field>
+                    </div>
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+                        <mat-form-field color="primary">
+                            <mat-select  [formControlName]="'status'">
+                                <mat-option [value]="''">All status</mat-option>
+                                <mat-option [value]="'active'">Active</mat-option>
+                                <mat-option [value]="'not-active'">Not-Active</mat-option>
+                            </mat-select>
+                        </mat-form-field>
                         <div class="w-full">
-                            <button mat-flat-button color="primary" class="w-full sm:w-30 h-36px-button" >
+                            <button mat-flat-button color="primary" class="w-full sm:w-30 h-36px-button" (click)="getVehicles()">
                                 <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:search'"></mat-icon>
                                 Search
                             </button>
-                            <button mat-stroked-button color="primary" class="mt-4 md:mt-0 w-50 md:w-auto md:ml-4 h-36px-button" >
+                            <button mat-stroked-button color="primary" class="mt-4 md:mt-0 w-50 md:w-auto md:ml-4 h-36px-button" (click)="refresh()">
                                 <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:refresh'"></mat-icon>
                             </button>
                         </div>
@@ -90,9 +85,9 @@
                     <div class="flex flex-col flex-auto overflow-x-auto">
                         <div class="flex items-center text-xl mb-4">
                             <mat-icon class="icon-size-6" [svgIcon]="'heroicons_solid:puzzle'" [color]="'primary'"></mat-icon>
-                            <div class="ml-2 font-medium">Emloyee List</div>
+                            <div class="ml-2 font-medium">Vehicle List</div>
                         </div>
-                        <table mat-table [dataSource]="dataStation"  multiTemplateDataRows class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataVehicle"  multiTemplateDataRows class="mat-elevation-z8" id="table">
                             <ng-container matColumnDef="stt">
                                 <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
                                     STT
@@ -101,68 +96,29 @@
                                     {{element.stt}}
                                 </td>
                             </ng-container>
-                            <ng-container matColumnDef="code">
+                            <ng-container matColumnDef="vehicletypename">
                                 <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Code
+                                    Vehicle Type Name
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.code}}
+                                    {{element.vehicleTypeInformation.name}}
                                 </td>
                             </ng-container>
-                            <ng-container matColumnDef="name">
+                            <ng-container matColumnDef="numberPlate">
                                 <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    First & Last Name
+                                    Number Plate
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.fullName}}
+                                    {{element.numberPlate}}
                                 </td>
                             </ng-container>
-                            <ng-container matColumnDef="phone">
-                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Phone Number
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.mobilePhone}}
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="type">
-                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Employee Type
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.employeeType}}
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="station">
-                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Station
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.threePLTeam}}
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="ismanager">
-                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Station Manager
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.contactEmail}}
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="service">
-                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Service
-                                </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.service}}
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="datecreate">
+                            
+                            <ng-container matColumnDef="createAt">
                                 <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
                                     Date Create
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.createdAt}}
+                                    {{convertNumToDate(element.createdAt)}}
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="status">
@@ -170,7 +126,10 @@
                                     Status
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.status}}
+                                    <div [ngSwitch]="element.status">
+                                        <p *ngSwitchCase="'active'">Active</p>
+                                        <p *ngSwitchCase="'not-active'">Inactive</p>
+                                    </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="action">
@@ -179,12 +138,31 @@
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     <div class="flex items-center">
-                                        <button class="ml-1 -mr-4" mat-icon-button >
-                                            <mat-icon
-                                                class="icon-size-5 text-accent-400"
-                                                [svgIcon]="'heroicons_solid:trash'"
-                                            ></mat-icon>
-                                            
+                                        <button class="mx-auto" mat-icon-button [matTooltip]="element.requestContent" [matTooltipPosition]="'left'" [matMenuTriggerFor]="actionPanel">
+                                                    <mat-icon class="icon-size-6 font-bold" [svgIcon]="'heroicons_outline:dots-circle-horizontal'"></mat-icon>
+                                                    <mat-menu #actionPanel>
+                                                        
+                                                        <button mat-menu-item
+                                                        [matTooltip]="element.note"
+                                                        [matTooltipPosition]="'left'"
+                                                        (click)="viewItem(element.code,$event)"
+                                                        >
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:document-report'"></mat-icon>
+                                                            View detail
+                                                        </button>
+                                                        <button mat-menu-item (click)="editItem(element.code,$event)">
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:cog'"></mat-icon>
+                                                            Edit
+                                                        </button>
+                                                        <button mat-menu-item (click)="updateVehicleStatus(element.code,'active')">
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:lock-open'"></mat-icon>
+                                                            Active
+                                                        </button>
+                                                        <button mat-menu-item (click)="updateVehicleStatus(element.code,'not-active')">
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:lock-closed'"></mat-icon>
+                                                            Inactive
+                                                        </button>
+                                                    </mat-menu>
                                         </button>
                                     </div>
                                 </td>
