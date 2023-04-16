@@ -12,31 +12,33 @@ import { CommonModule } from '@angular/common';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from 'app/shared/shared.module';
-import { VehicleType } from './vehicletype.component';
+import { FuseAlertModule } from '@fuse/components/alert';
+import { VehicletypeAdd } from './vehicletypeadd.component';
 
 
-const vehicleTypeRoutes: Route[] = [
+const vehicletypeAddRoutes: Route[] = [
     {
         path     : '',
-        component: VehicleType
+        component: VehicletypeAdd
     }
 ];
 
 @NgModule({
     declarations: [
-        VehicleType
+        VehicletypeAdd
     ],
     imports     : [
-        RouterModule.forChild(vehicleTypeRoutes),
+        RouterModule.forChild(vehicletypeAddRoutes),
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
         SharedModule,
-        MatDatepickerModule,
+        MatDatepickerModule,     
         MatSelectModule,
         MatTableModule,
         CommonModule,
+        FuseAlertModule,
         MatMomentDateModule,
         MatPaginatorModule,
         MatMenuModule
@@ -44,6 +46,6 @@ const vehicleTypeRoutes: Route[] = [
 
     ]
 })
-export class VehicleTypeModule
+export class VehicletypeAddModule
 {
 }

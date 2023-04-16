@@ -146,7 +146,13 @@
                                     Station Manager
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.isStationAdmin}}
+                                    <div [ngSwitch]="element.isStationAdmin">
+                                        <p *ngSwitchCase="true">
+                                            <mat-icon class="icon-size-5" color="primary" [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+                                        </p>
+                                        <p *ngSwitchCase="false"></p>
+                                        <p *ngSwitchCase=""></p>
+                                    </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="service">

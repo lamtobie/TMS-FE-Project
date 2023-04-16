@@ -12,25 +12,29 @@ import { CommonModule } from '@angular/common';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from 'app/shared/shared.module';
+import { VehicleType } from './vehicletype.component';
 import { FuseAlertModule } from '@fuse/components/alert';
-import { CoordinatorNew } from './coordinatornew.component';
-import { FilePickerModule } from 'ngx-awesome-uploader';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
 
 
-const coordinatorNewRoutes: Route[] = [
+const vehicleTypeRoutes: Route[] = [
     {
         path     : '',
-        component: CoordinatorNew
+        component: VehicleType
     }
 ];
 
 @NgModule({
     declarations: [
-        CoordinatorNew
+        VehicleType
     ],
     imports     : [
-        RouterModule.forChild(coordinatorNewRoutes),
+        RouterModule.forChild(vehicleTypeRoutes),
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
@@ -40,15 +44,20 @@ const coordinatorNewRoutes: Route[] = [
         MatSelectModule,
         MatTableModule,
         CommonModule,
-        FuseAlertModule,
         MatMomentDateModule,
         MatPaginatorModule,
         MatMenuModule,
-        FilePickerModule,
-        MatCheckboxModule,
+        FuseAlertModule,
+        MatSlideToggleModule,
+        MatToolbarModule,
+        MatProgressBarModule,
+        MatListModule,
+        MatSidenavModule,
+        MatCardModule,
+
 
     ]
 })
-export class CoordinatorNewModule
+export class VehicleTypeModule
 {
 }

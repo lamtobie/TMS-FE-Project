@@ -236,15 +236,47 @@
                         </div>
                     </div>
 
-                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-1 gap-4 md:gap-6">
-                        <div class="flex sm:flex-row items-center justify-between w-full max-w-xs sm:max-w-none ">
-                            <div class="flex fuse-mat-no-subscript sans-semibold w-description ">
-                                <span class="mx-auto mr-4 ">Pick a file: </span>
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript sans-semibold w-50">
+                                <span class="mx-auto mr-4">Employee avatar: </span>
                             </div>
-                            <ngx-awesome-uploader #uploader [adapter]="adapter " [enableCropper]="false ">
+                            <ngx-awesome-uploader id="uploader" #uploader [adapter]="adapter " [enableCropper]="false " (uploadSuccess)="onUploadSuccess()" [accept]="'.jpg, .png'">
                             </ngx-awesome-uploader>
+                            <div *ngIf="!isAddShow && photos.length > 0" id="photo" class="fuse-mat-no-subscript w-full">
+                                <div *ngFor="let photo of photos">
+                                    <img [src]="createImgPath(photo)" style="width:200px; height:300px;" title="Click to change the image" id="photo" (click)="onImageClick()">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript sans-semibold w-50">
+                                <span class="mx-auto mr-4">Identity Picture: </span>
+                            </div>
+                            <ngx-awesome-uploader  id="identity" #identity [adapter]="identityAdapter " [enableCropper]="false " (uploadSuccess)="onUploadSuccess()" [accept]="'.jpg, .png'">
+                            </ngx-awesome-uploader>
+                            <div *ngIf="!isAddShow && identityPhotos.length > 0" id="identityPhoto" class="fuse-mat-no-subscript w-full">
+                                <div *ngFor="let photo of identityPhotos">
+                                    <img [src]="createImgPath(photo)" style="width:auto; height:auto;" title="Click to change the image" id="identityphoto" (click)="onIdentityImageClick()">
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript sans-semibold w-50">
+                                <span class="mx-auto mr-4">Driver License: </span>
+                            </div>
+                            <ngx-awesome-uploader id="license" #license [adapter]="licenseAdapter " [enableCropper]="false " (uploadSuccess)="onUploadSuccess()" [accept]="'.jpg, .png'">
+                            </ngx-awesome-uploader>
+                            <div *ngIf="!isAddShow && licensePhotos.length > 0" id="licensePhoto" class="fuse-mat-no-subscript w-full">
+                                <div *ngFor="let photo of licensePhotos">
+                                    <img [src]="createImgPath(photo)" style="width:auto; height:auto;" title="Click to change the image" id="licensephoto" (click)="onLicenseImageClick()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                    
                     <div class="mt-8 mb-10 border-t"></div>
                     <div class="container mx-auto">

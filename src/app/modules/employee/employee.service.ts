@@ -38,8 +38,20 @@ export class EmployeeService{
         var url = environment.baseApi + "Station/GetAll";
         return this.httpClient.get<ListResponseModel<StationModel>>(url,{params:searchParam});
     }
-    public createDriver(data: EmployeeModel): Observable<DataResponseModel<EmployeeModel>> {
+    public createEmployee(data: EmployeeModel): Observable<DataResponseModel<EmployeeModel>> {
         var url = environment.baseApi + "Employee/Create";
         return this.httpClient.post<DataResponseModel<EmployeeModel>>(url, data);
+    }
+    public getPhotos(name:string) {
+        var url = environment.baseApi + "Employee/GetAvatarImage/"+name;
+        return this.httpClient.get(url);
+    }
+    public getIdentityPhotos(name:string) {
+        var url = environment.baseApi + "Employee/GetIdentityImage/"+name;
+        return this.httpClient.get(url);
+    }
+    public getLicensePhotos(name:string) {
+        var url = environment.baseApi + "Employee/GetLicenseImage/"+name;
+        return this.httpClient.get(url);
     }
 }

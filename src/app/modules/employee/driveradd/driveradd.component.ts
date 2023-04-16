@@ -22,18 +22,22 @@ import { FilePickAdapter } from "app/shared/file-picker.adapter";
 @Component({
     selector     : 'driveradd',
     templateUrl  : './driveradd.component.html',
+    styleUrls:['./driveradd.component.css'],
     encapsulation: ViewEncapsulation.None
 })
 export class DriverAdd
 {
+    @ViewChild('uploader', { static: true }) uploader: FilePickerComponent;
+    @ViewChild('identity', { static: true }) identity: FilePickerComponent;
+    @ViewChild('license', { static: true }) license: FilePickerComponent;
     @ViewChild("supportNgForm") supportNgForm: NgForm;
     @ViewChild("attachqueue") attachQueue: ElementRef;
     @ViewChild("paginator", { static: true }) paginator: MatPaginator;
     @ViewChild("content") content: ElementRef;
-    @ViewChild('uploader', { static: true }) uploader: FilePickerComponent;
 
     public adapter = new FilePickAdapter(this.http);
-
+    public identityAdapter = new FilePickAdapter(this.http);
+    public licenseAdapter = new FilePickAdapter(this.http);
 
     supportForm: FormGroup;
     isEditShow:boolean=false;
@@ -42,6 +46,9 @@ export class DriverAdd
     PAGEMODE: string='new';
     employeeCode:string;
     params: any;
+    photos: string[] = [];
+    identityPhotos: string[] = [];
+    licensePhotos: string[] = [];
     services:string[];
     employee:EmployeeModel;
     employeeEdited:EmployeeModel={};
@@ -99,6 +106,7 @@ export class DriverAdd
             this.createForm();
             this.generateEmployeeCode();
             this.getStaitonField();
+            
         }
     }
 
@@ -107,8 +115,11 @@ export class DriverAdd
    * On init
    */
   ngOnInit(): void {
-   
       //this.initData();
+      this.uploader.enableAutoUpload=false
+      this.identity.enableAutoUpload=false;
+      this.license.enableAutoUpload=false;
+
   }
     createForm() {
         if (!this.supportForm) {
@@ -180,9 +191,15 @@ export class DriverAdd
         this.address.slicLabel=this.supportForm.get('ward').value;
         this.address.slicLevel="Phuong"
         this.employeeEdited.address=this.address;
-        this.employeeService.createDriver(this.employeeEdited).subscribe({
+        this.employeeService.createEmployee(this.employeeEdited).subscribe({
             next: (result) => {
                 if (result.success == true) {
+                    if (this.uploader.files.length>0)
+                    this.adapter.uploadFile(this.uploader.files[0],this.employeeCode).subscribe();      
+                    if (this.identity.files.length>0)
+                    this.adapter.uploadIdentityPicture(this.identity.files[0],this.employeeCode).subscribe();    
+                    if (this.license.files.length>0)
+                    this.adapter.uploadLicensePicture(this.license.files[0],this.employeeCode).subscribe();            
                     const confirmation = this._fuseAlertnService.open({
                         title  : 'Success',
                         message: 'Create successfully for driver '+this.employeeEdited.fullName,
@@ -270,7 +287,9 @@ export class DriverAdd
                     status:data.data.status,
                   });
                   this.employeeName=data.data.fullName;
-                  
+                  this.getPhotos(data.data.avatarPicture);
+                  this.getIdentityPhotos(data.data.identityNumberPicture);
+                  this.getLicensePhotos(data.data.drivingLicensePicture);
             }
         }, error: err => {
             this.alert = {
@@ -306,7 +325,9 @@ export class DriverAdd
                     status:data.data.status
                   });
                   this.employeeName=data.data.fullName;
-                  
+                  this.getPhotos(data.data.avatarPicture);
+                  this.getIdentityPhotos(data.data.identityNumberPicture);
+                  this.getLicensePhotos(data.data.drivingLicensePicture);
             }
         }, error: err => {
             this.alert = {
@@ -320,10 +341,33 @@ export class DriverAdd
     moveToEmployee() {
         this.route.navigateByUrl("/employee");
     }
-
+    getPhotos(name:string){
+        if (name){
+            var form=document.getElementById('uploader');
+            form.style.display='none';
+            this.employeeService.getPhotos(name).subscribe(data => this.photos = data['photos']);
+        }
+      
+    }
+    getIdentityPhotos(name:string){
+        if (name){
+            var form=document.getElementById('identity');
+            form.style.display='none';
+            this.employeeService.getIdentityPhotos(name).subscribe(data => this.identityPhotos = data['photos']);
+        }   
+    }
+    getLicensePhotos(name:string){
+        if (name){
+            var form=document.getElementById('license');
+            form.style.display='none';
+            this.employeeService.getLicensePhotos(name).subscribe(data => this.licensePhotos = data['photos']);
+        }   
+    }
+    public createImgPath = (serverPath: string) => { 
+        return `https://localhost:7229/${serverPath}`; 
+      }
     updateEmployee(){
         this.employeeEdited=this.employee;
-
         var services=this.supportForm.get('services').value;
         var textServices="";
         for (var i=0;i<services.length-1;i++){
@@ -356,6 +400,13 @@ export class DriverAdd
         this.employeeService.updateEmployee(this.employeeEdited).subscribe({
             next: (result) => {
                 if (result.success == true) {
+                    if (this.uploader.files.length>0)
+                    this.adapter.uploadFile(this.uploader.files[0],this.employeeCode).subscribe();      
+                    if (this.identity.files.length>0)
+                    this.adapter.uploadIdentityPicture(this.identity.files[0],this.employeeCode).subscribe();    
+                    if (this.license.files.length>0)
+                    this.adapter.uploadLicensePicture(this.license.files[0],this.employeeCode).subscribe();     
+
                     const confirmation = this._fuseAlertnService.open({
                         title  : 'Success',
                         message: 'Update successfully for employee '+this.employeeEdited.fullName,
@@ -492,6 +543,53 @@ export class DriverAdd
                this.supportForm.patchValue({'phone':""});
             });        
         }
+    }
+    onImageClick(){
+        if (this.PAGEMODE=='edit'){
+            var form=document.getElementById('uploader');
+            var photo=document.getElementById('photo');
+            photo.style.display='none';
+            form.style.display='block';
+        }
+    }
+    onIdentityImageClick(){
+        if (this.PAGEMODE=='edit'){
+            var form=document.getElementById('identity');
+            var photo=document.getElementById('identityPhoto');
+            photo.style.display='none';
+            form.style.display='block';
+        }
+    }
+    onLicenseImageClick(){
+        if (this.PAGEMODE=='edit'){
+            var form=document.getElementById('license');
+            var photo=document.getElementById('licensePhoto');
+            photo.style.display='none';
+            form.style.display='block';
+        }
+    }
+
+    onUploadSuccess(): void {
+        const confirmation = this._fuseAlertnService.open({
+            title  : 'Success',
+            message: 'Upload image successfully',
+            icon       : {
+                show : true,
+                name : 'heroicons_outline:check-circle',
+                color: 'success'
+            },
+            actions    : {
+                confirm: {
+                    show : false,
+                    label: 'Confirm',
+                    color: 'warn'
+                },
+                cancel : {
+                    show : true,
+                    label: 'OK'
+                }
+            },
+        });
     }
   
 }
