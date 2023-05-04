@@ -1,0 +1,51 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- header -->
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-3 pb-4 sm:pt-2 sm:pb-6 sm:px-15 bg-default dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <div class="mt-0">
+                <h2 class="text-2xl md:text-2xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    Cancel order " {{ employeeName }}"
+                </h2>
+            </div>
+        </div>
+    </div>
+    <!-- Main -->
+    <div class="flex-auto -mt-2 p-4 sm:p-6 shadow bg-card">
+        <div class="flex flex-col flex-auto overflow-x-auto">
+            <div class="flex flex-col flex-auto overflow-hidden">
+                <!-- CONTENT GOES HERE -->
+                <form class="space-y-3" [formGroup]="supportForm" #supportNgForm="ngForm">
+                    <div class="grid grid-cols-1 sm:grid-cols-1 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <input matInput [formControlName]="'reason'" 
+                                placeholder="Cancel reason ..." />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 mb-10 border-t"></div>
+                    <div class="container mx-auto">
+                        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                            <div class="w-full" id="clear">
+                                <button mat-stroked-button color="primary" class="w-full" (click)="cancelOrder()">
+                                    <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:minus-circle'"></mat-icon>
+                                    Update
+                                </button>
+                            </div>
+                            <div class="w-full" id="cancel">
+                                <button mat-stroked-button class="w-full" color="warn" (click)="onBack()">
+                                    <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -2,6 +2,8 @@ import { InitCategoryPageState } from "../commons/initStateModel";
 import { TrackableModel } from "../commons/trackableModel";
 import { DataAttributeModel } from "../attribute/dataAttributeModel";
 import { StationModel } from "../station/stationModel";
+import { EmployeeModel } from "models/employee/employeeModel";
+import { AddressModel } from "models/address/addressModel";
 
 export interface InitDeliveryOrderPageState extends InitCategoryPageState<DeliveryOrderModel> { }
 
@@ -13,6 +15,9 @@ export interface SearchDeliveryOrderResponsibilityResponse {
     phone: string,
     fullname: string,
     address: string
+}
+export interface DeliveryOrderUpdateStatusModel {
+    status?: string,
 }
 
 export interface PointModel {
@@ -42,7 +47,7 @@ export interface DeliveryPackageModel extends TrackableModel {
 }
 
 export interface DeliveryOrderModel {
-    stt:number,
+    stt?:number,
     code?: string,
     parentCode?: string,
     groupCode?: string,
@@ -67,16 +72,14 @@ export interface DeliveryOrderModel {
     expectedArrivalTime?: number,
     expectedStartTime?: number,
     expectedTimeConsumed?: number,
-    ctualArrivalTime?: number,
+    actualArrivalTime?: number,
     actualStartTime?: number,
     actualTimeConsumed?: number,
     startStationCode?: string,
-    startAddress?: string,
     startContactPerson?: string,
     startContactPhone?: string,
     startNote?: string,
     endStationCode?: string,
-    endAddress?: string,
     endContactPerson?: string,
     endContactPhone?: string,
     endNote?: string,
@@ -84,6 +87,11 @@ export interface DeliveryOrderModel {
     transitOrder?: number,
     numberOfTransit?: number,
     threePLTeam?: string,
+    createdAt?:number,
+    driver?:EmployeeModel,
+    coordinator?:EmployeeModel,
+    startAddress?:AddressModel,
+    endAddress?:AddressModel,
 
     // For presentation
     children?: DeliveryOrderModel[],

@@ -1,18 +1,19 @@
+import { AddressModel } from "models/address/addressModel";
 import { DataAttributeModel } from "../attribute/dataAttributeModel";
 import { DeliveryPackageModel } from "./deliveryOrderModel";
 
 export interface PickupInfoModel
 {
-    startAddress: string,
-    startContactPerson: string,
-    startContactPhone: string,
+    startAddress?: AddressModel,
+    startContactPerson?: string,
+    startContactPhone?: string,
     expectedStartTime?: number,
     startNote?: string,
 }
 
 export interface DropoffInfoModel
 {
-    endAddress?: string,
+    endAddress?: AddressModel,
     endContactPerson?: string,
     endContactPhone?: string,
     endNote?: string,
@@ -32,6 +33,6 @@ export interface DropoffInfoModel
 }
 
 export interface DeliveryOrderManyDropoffCreationModel {
-    pickupInfo: PickupInfoModel,
-    dropoffInfo: Array<DropoffInfoModel>
+    pickupInfo?: PickupInfoModel,
+    dropoffInfo?: Array<DropoffInfoModel>
 }

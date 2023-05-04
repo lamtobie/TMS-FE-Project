@@ -80,14 +80,18 @@ export const appRoutes: Route[] = [
             {path: 'employee', loadChildren: () => import('app/modules/employee/employeelist/employeelist.module').then(m => m.EmployeeListModule)},
             {path: 'vehicle', loadChildren: () => import('app/modules/vehicle/vehiclelist/vehicle.module').then(m => m.VehicleModule)},
             {path: 'vehicletype', loadChildren: () => import('app/modules/vehicletype/vehicletypelist/vehicletype.module').then(m => m.VehicleTypeModule)},
-            {path: 'deliveryoder', loadChildren: () => import('app/modules/deleveryoder/deliveryoder.module').then(m => m.DeliveryOderModule)},
-            {path: 'handoversession', loadChildren: () => import('app/modules/handoversession/handoversession.module').then(m => m.HandoverModule)},
+            {path: 'deliveryoder', loadChildren: () => import('app/modules/deliveryorder/deliveryorderlist/deliveryoder.module').then(m => m.DeliveryOderModule)},
+            {path: 'handoversession', loadChildren: () => import('app/modules/handoversession/hanhoversessionlist/handoversession.module').then(m => m.HandoverModule)},
             {path: 'stationnew', loadChildren: () => import('app/modules/station/stationnew/stationnew.module').then(m => m.StationNewModule)},
             {path: 'changepassword', loadChildren: () => import('app/modules/employee/changepassword/changepassword.module').then(m => m.ChangePasswordModule)},
             {path: 'drivernew', loadChildren: () => import('app/modules/employee/driveradd/driveradd.module').then(m => m.DriverAddModule)},
             {path: 'coordinatornew', loadChildren: () => import('app/modules/employee/coordinatornew/coordiatornew.module').then(m => m.CoordinatorNewModule)},
             {path: 'vehicletypeadd', loadChildren: () => import('app/modules/vehicletype/vehicletypeadd/vehicletypeadd.module').then(m => m.VehicletypeAddModule)},
             {path: 'vehicleadd', loadChildren: () => import('app/modules/vehicle/vehicleadd/vehicleadd.module').then(m => m.VehicleAddModule)},
+            {path: 'changeorderstatus', loadChildren: () => import('app/modules/deliveryorder/changestatus/changestatus.module').then(m => m.ChangeOrderStatusModule)},
+            {path: 'assigndriver', loadChildren: () => import('app/modules/deliveryorder/assignDriver/assignDriver.module').then(m => m.AssignDriverModule)},
+            {path: 'deliveryorderadd', loadChildren: () => import('app/modules/deliveryorder/deliveryorderadd/deliveryorderadd.module').then(m => m.DeliveryOrderAddModule)},
+            {path: 'cancelorder', loadChildren: () => import('app/modules/deliveryorder/cancelorder/cancelorder.module').then(m => m.CancelOrderModule)},
 
         ]
     },{
