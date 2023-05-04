@@ -1,0 +1,170 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- header -->
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-3 pb-4 sm:pt-2 sm:pb-6 sm:px-15 bg-default dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <div class="mt-0">
+                <h2 class="text-2xl md:text-2xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    Assign driver for order "{{ employeeName }}"
+                </h2>
+            </div>
+        </div>
+    </div>
+    <!-- Main -->
+    <div class="flex-auto -mt-2 p-4 sm:p-6 shadow bg-card">
+        <div class="flex flex-col flex-auto overflow-x-auto">
+            <div class="flex flex-col flex-auto overflow-hidden">
+                <!-- CONTENT GOES HERE -->
+                <form class="space-y-3" [formGroup]="supportForm" #supportNgForm="ngForm">
+                    <div class="grid grid-cols-1 sm:grid-cols-1 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">DO Code:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <input matInput [formControlName]="'code'" />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-1 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">Reference Code:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <input matInput [formControlName]="'referencecode'" />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-1 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">Total Items:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <input matInput [formControlName]="'totalitems'" />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-1 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">Status:</span>
+                            </div>
+                            <mat-form-field color="primary" class="w-full">
+                                <mat-select  [formControlName]="'status'">
+                                    <mat-option [value]="'New'">New</mat-option>
+                                    <mat-option [value]="'Assigned'">Assigned</mat-option>
+                                    <mat-option [value]="'WaitToPick'">Wait To Pick</mat-option>
+                                    <mat-option [value]="'Picking'">Picking</mat-option>
+                                    <mat-option [value]="'Picked'">Picked</mat-option>
+                                    <mat-option [value]="'InTrasit'">In Trasit</mat-option>
+                                    <mat-option [value]="'Dropped'">Dropped</mat-option>
+                                    <mat-option [value]="'Confirmed'">Confirmed</mat-option>
+                                    <mat-option [value]="'DeliveringToStation'">Delivering To Station</mat-option>
+                                    <mat-option [value]="'DeliveredToStationSuccess'">Delivered To Station Success</mat-option>
+                                    <mat-option [value]="'DeliveredToStationFailure'">Delivered To Station Failure</mat-option>
+                                    <mat-option [value]="'DeliveringToClient'">Delivering To Client</mat-option>
+                                    <mat-option [value]="'DeliveredToClientSuccessful'">Delivered To Client Successful</mat-option>
+                                    <mat-option [value]="'DeliveredToClientFailure'">Delivered To Client Failure</mat-option>
+                                    <mat-option [value]="'DeliveredFailureAndRefunding'">Delivered Failure And Refunding</mat-option>
+                                    <mat-option [value]="'DeliveredFailureAndRefunded'">Delivered Failure And Refunded</mat-option>
+                                    <mat-option [value]="'DeliveryDelay'">Delivery Delay</mat-option>
+                                    <mat-option [value]="'DeliveryDelayAndReturning'">Delivery Delay And Returning</mat-option>
+                                    <mat-option [value]="'DeliveryDelayAndReturned'">Delivery Delay And Returned</mat-option>
+                                    <mat-option [value]="'Cancel'">Cancel</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-1 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">Delivery Service:</span>
+                            </div>
+                            <mat-form-field color="primary" class="w-full">
+                                <mat-select  [formControlName]="'deliveryservice'">
+                                    <mat-option [value]="'Giao Hàng Tiêu Chuẩn'">Giao Hàng Tiêu Chuẩn</mat-option>
+                                    <mat-option [value]="'Giao Hàng Nhanh'">Giao Hàng Nhanh</mat-option>
+                                    <mat-option [value]="'Giao Hoả Tốc'">Giao Hoả Tốc</mat-option>
+                                    <mat-option [value]="'Trung Chuyển'">Trung Chuyển</mat-option>
+                                </mat-select>    
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-1 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">Delivery Address:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <input matInput [formControlName]="'address'" />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-1 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">Driver:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full" >
+                                <mat-select  [formControlName]="'driver'"  floatlLabel="never" placeholder="Choose driver">
+                                    <mat-option *ngFor="let option of driverList" [value]="option.code">
+                                        {{option.code+"-"+option.fullName +"-"+option.mobilePhone}}
+                                    </mat-option>
+                                </mat-select>                           
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-1 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">Vehicle:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-select  [formControlName]="'vehicle'"  floatlLabel="never" placeholder="Choose vehicle">
+                                    <mat-option *ngFor="let option of vehicleList" [value]="option.code">
+                                        {{option.code+"-"+option.numberPlate}}
+                                    </mat-option>
+                                </mat-select>                           
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-1 gap-4 md:gap-6">
+                        <div class="flex sm:flex-row items-center justify-between">
+                            <div class="flex fuse-mat-no-subscript w-50 sans-semibold">
+                                <span class="mx-auto mr-2">Drop-off point:</span>
+                            </div>
+                            <mat-form-field class="fuse-mat-no-subscript w-full">
+                                <mat-select  [formControlName]="'station'"  floatlLabel="never" placeholder="Choose station">
+                                    <mat-option *ngFor="let option of stationList" [value]="option.code">
+                                        {{option.code +"-"+option.name}}
+                                    </mat-option>
+                                </mat-select>                        
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="mt-8 mb-10 border-t"></div>
+                    <div class="container mx-auto">
+                        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                            <div class="w-full" id="clear">
+                                <button mat-stroked-button color="primary" class="w-full" (click)="assign()">
+                                    <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:save'"></mat-icon>
+                                    Assign
+                                </button>
+                            </div>
+                            <div class="w-full" id="cancel">
+                                <button mat-stroked-button class="w-full" color="warn" (click)="onBack()">
+                                    <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:x'"></mat-icon>
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

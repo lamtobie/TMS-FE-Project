@@ -1,0 +1,37 @@
+
+tr.cgs-element-row:not(.cgs-expanded-row):hover {
+    background: #e4f0ff;
+    cursor: pointer;
+}
+
+.cgs-expanded-row {
+    background: #e4f0ff !important;
+}
+
+.cgs-element-row td {
+    border-bottom-width: 0 !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.cgs-element-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.cgs-table-header {
+    padding: 5px 4px !important;
+    text-align: center !important;
+}
+tr.cgs-detail-row {
+    height: 0 !important;
+}
+
+tr.cgs-element-row:not(.cgs-expanded-row):hover {
+    background: #eaf3fd;
+    cursor: pointer;
+}
+
+.cgs-expanded-row {
+    background: #eaf3fd !important;
+}

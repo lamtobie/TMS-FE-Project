@@ -1,0 +1,434 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- header -->
+    <div
+    class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-3 pb-4 sm:pt-2 sm:pb-6 sm:px-15 bg-default dark:bg-transparent">
+    <div class="flex-1 min-w-0">
+        <div>
+            <div class="-ml-4">
+                <button mat-button [color]="'primary'">
+                    <mat-icon [svgIcon]="'heroicons_outline:arrow-narrow-left'"></mat-icon>
+                    <span class="ml-2">Back</span>
+                </button>
+            </div>
+        </div>
+        <!-- Title -->
+        <div class="mt-0">
+            <h2 class="text-2xl md:text-2xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                Delivery Order Management
+            </h2>
+        </div>
+    </div>
+        <!-- Actions -->
+        <div class="flex shrink-0 items-center mt-4 sm:mt-2 sm:ml-2">
+            <a class="ml-3" mat-flat-button [color]="'primary'" (click)="moveToOrderAdd()">
+                <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:plus-circle'"></mat-icon>
+                New Delivery Oder
+            </a>
+            <a class="ml-3" mat-flat-button [color]="'primary'">
+                <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
+                Handover Scan
+            </a>
+            <a class="ml-3" mat-flat-button [color]="'primary'">
+                <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:receipt-refund'"></mat-icon>
+                Get Refunds
+            </a>
+            <a class="ml-3" mat-flat-button [color]="'primary'" (click)="exportExcel()">
+                <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:document-report'"></mat-icon>
+                Export
+            </a>
+        </div>
+    </div>
+    <!-- Main -->
+    <div class="flex-auto -mt-2 p-4 sm:p-6 shadow bg-card">
+        <div class="flex flex-col flex-auto overflow-x-auto">
+            <div class="flex flex-col flex-auto overflow-hidden">
+                <!-- CONTENT GOES HERE -->
+                <form class="space-y-3" [formGroup]="supportForm" #supportNgForm="ngForm">
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+                        <div class="w-full">
+                            <mat-form-field class="w-full" [floatLabel]="'always'">
+                                <mat-icon matPrefix class="icon-size-5" [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                                <input placeholder="Keyword" matInput [formControlName]="'keyword'" #input />
+                            </mat-form-field>
+                        </div>
+                        <mat-form-field color="primary">
+                            <mat-select  [formControlName]="'status'">
+                                <mat-option [value]="''">All status</mat-option>
+                                <mat-option [value]="'New'">New</mat-option>
+                                <mat-option [value]="'Assigned'">Assigned</mat-option>
+                                <mat-option [value]="'WaitToPick'">Wait To Pick</mat-option>
+                                <mat-option [value]="'Picking'">Picking</mat-option>
+                                <mat-option [value]="'Picked'">Picked</mat-option>
+                                <mat-option [value]="'InTrasit'">In Trasit</mat-option>
+                                <mat-option [value]="'Dropped'">Dropped</mat-option>
+                                <mat-option [value]="'Confirmed'">Confirmed</mat-option>
+                                <mat-option [value]="'DeliveringToStation'">Delivering To Station</mat-option>
+                                <mat-option [value]="'DeliveredToStationSuccess'">Delivered To Station Success</mat-option>
+                                <mat-option [value]="'DeliveredToStationFailure'">Delivered To Station Failure</mat-option>
+                                <mat-option [value]="'DeliveringToClient'">Delivering To Client</mat-option>
+                                <mat-option [value]="'DeliveredToClientSuccessful'">Delivered To Client Successful</mat-option>
+                                <mat-option [value]="'DeliveredToClientFailure'">Delivered To Client Failure</mat-option>
+                                <mat-option [value]="'DeliveredFailureAndRefunding'">Delivered Failure And Refunding</mat-option>
+                                <mat-option [value]="'DeliveredFailureAndRefunded'">Delivered Failure And Refunded</mat-option>
+                                <mat-option [value]="'DeliveryDelay'">Delivery Delay</mat-option>
+                                <mat-option [value]="'DeliveryDelayAndReturning'">Delivery Delay And Returning</mat-option>
+                                <mat-option [value]="'DeliveryDelayAndReturned'">Delivery Delay And Returned</mat-option>
+                                <mat-option [value]="'Cancel'">Cancel</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field color="primary">
+                            <mat-select  [formControlName]="'deliveryservice'">
+                                <mat-option [value]="''">All kinds of Delivery service</mat-option>
+                                <mat-option [value]="'Giao Hàng Tiêu Chuẩn'">Giao Hàng Tiêu Chuẩn</mat-option>
+                                <mat-option [value]="'Giao Hàng Nhanh'">Giao Hàng Nhanh</mat-option>
+                                <mat-option [value]="'Giao Hoả Tốc'">Giao Hoả Tốc</mat-option>
+                                <mat-option [value]="'Trung Chuyển'">Trung Chuyển</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+                        <mat-form-field color="primary">
+                            <mat-select  [formControlName]="'driver'">
+                                <mat-option [value]="''">All Drivers</mat-option>
+                                <mat-option *ngFor="let option of driverList" [value]="option.code">
+                                    {{option.fullName +"-"+option.mobilePhone}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field color="primary">
+                            <mat-select  [formControlName]="'coordinator'">
+                                <mat-option [value]="''">All Coordinator</mat-option>
+                                <mat-option *ngFor="let option of coordinatorList" [value]="option.code">
+                                    {{option.fullName +"-"+option.mobilePhone}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="w-full">
+                            <mat-date-range-input [formGroupName]="'range'" [rangePicker]="picker">
+                                <input matStartDate [formControlName]="'start'" placeholder="From create date">
+                                <input matEndDate [formControlName]="'end'" placeholder="To create date">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #picker></mat-date-range-picker>
+                        </mat-form-field>
+                    </div>
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+                        <mat-form-field appearance="fill" class="w-full">
+                            <mat-date-range-input [formGroupName]="'deliveryRange'" [rangePicker]="startPicker">
+                                <input matStartDate [formControlName]="'deliveryStart'" placeholder="From delivery start">
+                                <input matEndDate [formControlName]="'deliveryEnd'" placeholder="To delivery start">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #startPicker></mat-date-range-picker>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="w-full">
+                            <mat-date-range-input [formGroupName]="'arrivalRange'" [rangePicker]="arrivalPicker">
+                                <input matStartDate [formControlName]="'arrivalStart'" placeholder="From arrival start">
+                                <input matEndDate [formControlName]="'arrivalEnd'" placeholder="To arrival start">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="arrivalPicker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #arrivalPicker></mat-date-range-picker>
+                        </mat-form-field>
+                        <mat-form-field color="primary">
+                            <mat-select  [formControlName]="'pickuppoint'">
+                                <mat-option [value]="''">All Pick-up Point</mat-option>
+                                <mat-option *ngFor="let option of stationList" [value]="option.code">
+                                    {{option.code +"-"+option.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="mt-0 grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+                        <div class="w-full">
+                            <button mat-flat-button color="primary" class="w-full sm:w-30 h-36px-button" (click)="getDeliveryOrders()">
+                                <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:search'"></mat-icon>
+                                Search
+                            </button>
+                            <button mat-stroked-button color="primary" class="mt-4 md:mt-0 w-50 md:w-auto md:ml-4 h-36px-button" (click)="refresh()">
+                                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:refresh'"></mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="flex flex-col mt-8 flex-auto bg-card shadow rounded-md overflow-hidden">
+                    <div class="flex flex-col flex-auto overflow-x-auto">
+                        <div class="flex items-center text-xl mb-4">
+                            <mat-icon class="icon-size-6" [svgIcon]="'heroicons_solid:puzzle'" [color]="'primary'"></mat-icon>
+                            <div class="ml-2 font-medium">Delivery Order List</div>
+                        </div>
+                        <table mat-table [dataSource]="dataDeliveryOrder"  multiTemplateDataRows class="mat-elevation-z8">
+                            <ng-container matColumnDef="docode">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Code
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.code}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="childrencode">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Reference Code
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.referenceCode}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="numberofpackage">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Total Items
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.totalItems}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Status
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div [ngSwitch]="element.status">
+                                        <p *ngSwitchCase="'New'">New</p>
+                                        <p *ngSwitchCase="'Assigned'">Assigned</p>
+                                        <p *ngSwitchCase="'WaitToPick'">Wait To Pick</p>
+                                        <p *ngSwitchCase="'Picking'">Picking</p>
+                                        <p *ngSwitchCase="'Picked'">Picked</p>
+                                        <p *ngSwitchCase="'InTrasit'">In transit</p>
+                                        <p *ngSwitchCase="'Dropped'">Dropped</p>
+                                        <p *ngSwitchCase="'Confirmed'">Confirmed</p>
+                                        <p *ngSwitchCase="'DeliveringToStation'">Delivering To Station</p>
+                                        <p *ngSwitchCase="'DeliveredToStationSuccess'">Delivered To Station Success</p>
+                                        <p *ngSwitchCase="'DeliveredToStationFailure'">Delivered To Station Failure</p>
+                                        <p *ngSwitchCase="'DeliveringToClient'">Delivering To Client</p>
+                                        <p *ngSwitchCase="'DeliveredToClientSuccessful'">Delivered To Client Successful</p>
+                                        <p *ngSwitchCase="'DeliveredToClientFailure'">Delivered To Client Failure</p>
+                                        <p *ngSwitchCase="'DeliveredFailureAndRefunding'">Delivered Failure And Refunding</p>
+                                        <p *ngSwitchCase="'DeliveredFailureAndRefunded'">Delivered Failure And Refunded</p>
+                                        <p *ngSwitchCase="'DeliveryDelay'">Delivery Delay</p>
+                                        <p *ngSwitchCase="'DeliveryDelayAndReturning'">Delivery Delay And Returning</p>
+                                        <p *ngSwitchCase="'DeliveryDelayAndReturned'">Delivery Delay And Returned</p>
+                                        <p *ngSwitchCase="'Cancel'">Cancel</p>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="pickuppoint">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Pick-up Point
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.startAddress.text}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="deliveryservice">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Service
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.threePLTeam}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="cod">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Cod Amount
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.codAmount}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="driver">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Driver
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div *ngIf="element.driver!=null">
+                                        <p>{{element.driver.fullName +"-"+element.driver.mobilePhone}}</p>
+                                    </div>
+                                  
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="coordinator">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Coordinator
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div *ngIf="element.coordinator!=null">
+                                        <p>{{element.coordinator.fullName+"-"+element.coordinator.mobilePhone}}</p>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="session">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Session
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.sessionCode}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="date">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Date (start-end)
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{convertNumToDate(element.expectedStartTime)+"-"+convertNumToDate(element.expectedArrivalTime)}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
+                                    Action
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="flex items-center">
+                                        <button class="mx-auto" mat-icon-button [matTooltip]="element.requestContent" [matTooltipPosition]="'left'" [matMenuTriggerFor]="actionPanel">
+                                                    <mat-icon class="icon-size-6 font-bold" [svgIcon]="'heroicons_outline:dots-circle-horizontal'"></mat-icon>
+                                                    <mat-menu #actionPanel>
+                                                        
+                                                        <button mat-menu-item
+                                                        [matTooltip]="element.note"
+                                                        [matTooltipPosition]="'left'"
+                                                        (click)="viewItem(element.code, $event)"
+                                                        >
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:document-report'"></mat-icon>
+                                                            View detail
+                                                        </button>
+                                                        <button mat-menu-item (click)="editItem(element.code,$event)">
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:cog'"></mat-icon>
+                                                            Edit
+                                                        </button>
+                                                        <button mat-menu-item >
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:lock-open'"></mat-icon>
+                                                            Package Details
+                                                        </button>
+                                                        <button mat-menu-item (click)="openAssignDriver(element.code)">
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:lock-closed'"></mat-icon>
+                                                            Assign driver
+                                                        </button>
+                                                        <button mat-menu-item (click)="openCancelOrder(element.code)">
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:lock-closed'"></mat-icon>
+                                                            Cancel Order
+                                                        </button>
+                                                        <button mat-menu-item (click)="openChangeStautus(element.code)">
+                                                            <mat-icon
+                                                                class="icon-size-4"
+                                                                [svgIcon]="'heroicons_outline:key'"
+                                                            ></mat-icon>
+                                                            Change status
+                                                        </button>
+                                                    </mat-menu>
+                                        </button>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="staffDetail">
+                                <td mat-cell *matCellDef="let element" [attr.colspan]="displayCols2.length">
+                                    <div class="cgs-element-detail" [@detailStaff]="element == staffElement? 'expanded': 'collapsed'">
+                                        <div class="w-full container mx-auto p-3">
+                                            <div class="grid grid-cols-1 sm:grid-cols-3 mb-2 gap-2 md:gap-3">
+                                                <div class="flex items-center leading-5 text-md text-secondary">
+                                                    <mat-icon class="icon-size-3 text-hint" [svgIcon]="
+                                                            'heroicons_outline:arrow-narrow-right'
+                                                        "></mat-icon>
+                                                    <div class="ml-1.5">
+                                                        Create At:
+                                                    </div>
+                                                    <div class="ml-1.5">
+                                                        {{convertNumToDate(element.createdAt)}}
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center leading-5 text-md text-secondary">
+                                                    <mat-icon class="icon-size-3 text-hint" [svgIcon]="
+                                                            'heroicons_outline:arrow-narrow-right'
+                                                        "></mat-icon>
+                                                    <div class="ml-1.5">Start Station:</div>
+                                                    <div class="ml-1.5">
+                                                        {{element.startStationCode}}
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center leading-5 text-md text-secondary">
+                                                    <mat-icon class="icon-size-3 text-hint" [svgIcon]="
+                                                            'heroicons_outline:arrow-narrow-right'
+                                                        "></mat-icon>
+                                                    <div class="ml-1.5">
+                                                        End address:
+                                                    </div>
+                                                    <div class="ml-1.5">
+                                                        {{element.endAddress.text}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-1 sm:grid-cols-3 mb-2 gap-2 md:gap-3">
+                                                <div class="flex items-center leading-5 text-md text-secondary">
+                                                    <mat-icon class="icon-size-3 text-hint" [svgIcon]="
+                                                            'heroicons_outline:arrow-narrow-right'
+                                                        "></mat-icon>
+                                                    <div class="ml-1.5">
+                                                        End Station:
+                                                    </div>
+                                                    <div class="ml-1.5">
+                                                        {{element.endStationCode}}
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center leading-5 text-md text-secondary">
+                                                    <mat-icon class="icon-size-3 text-hint" [svgIcon]="
+                                                            'heroicons_outline:arrow-narrow-right'
+                                                        "></mat-icon>
+                                                    <div class="ml-1.5">Expected Start Time:</div>
+                                                    <div class="ml-1.5">
+                                                        {{convertNumToDate(element.expectedStartTime)}}
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center leading-5 text-md text-secondary">
+                                                    <mat-icon class="icon-size-3 text-hint" [svgIcon]="
+                                                            'heroicons_outline:arrow-narrow-right'
+                                                        "></mat-icon>
+                                                    <div class="ml-1.5">Expected Arrival Time:</div>
+                                                    <div class="ml-1.5">
+                                                        {{convertNumToDate(element.expectedArrivalTime)}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-1 sm:grid-cols-3 mb-2 gap-2 md:gap-3">
+                                                <div class="flex items-center leading-5 text-md text-secondary">
+                                                    <mat-icon class="icon-size-3 text-hint" [svgIcon]="
+                                                            'heroicons_outline:arrow-narrow-right'
+                                                        "></mat-icon>
+                                                    <div class="ml-1.5">
+                                                        Start Contact:
+                                                    </div>
+                                                    <div class="ml-1.5">
+                                                        {{element.startContactPerson+"-"+element.startContactPhone}}
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center leading-5 text-md text-secondary">
+                                                    <mat-icon class="icon-size-3 text-hint" [svgIcon]="
+                                                            'heroicons_outline:arrow-narrow-right'
+                                                        "></mat-icon>
+                                                    <div class="ml-1.5">End Contact:</div>
+                                                    <div class="ml-1.5">
+                                                        {{element.endContactPerson+"-"+element.endContactPhone}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </ng-container>
+    
+                            <tr mat-header-row *matHeaderRowDef="displayCols2"></tr>
+                            <tr mat-row *matRowDef="let element; columns: displayCols2" class="cgs-element-row" [class.cgs-expanded-row]="staffElement === element" (click)="selectElement(element,$event)"></tr>
+                            <tr mat-row *matRowDef="let row; columns: ['staffDetail']" class="cgs-detail-row"></tr>
+
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" colspan="7">
+                                    No data matching the filter. Click 'Search' button to get more items from centers.
+                                </td>
+                            </tr>
+                        </table>
+                        <mat-paginator class="flex w-full justify-end" [pageSizeOptions]="[20, 40]" showFirstLastButtons [hidePageSize]="true" #paginator>
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
