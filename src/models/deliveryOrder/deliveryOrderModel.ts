@@ -55,6 +55,7 @@ export interface DeliveryOrderModel {
     coordinatorCode?: string,
     deliveryService?:string,
     sessionCode?: string,
+    sessionStatus?:string,
     referenceCode?: string,
     productType?: string,
     sourceBy?: string,

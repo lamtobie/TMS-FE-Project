@@ -10,8 +10,8 @@ tr.cgs-element-row:not(.cgs-expanded-row):hover {
 
 .cgs-element-row td {
     border-bottom-width: 0 !important;
-    text-align: center;
     vertical-align: middle;
+    text-align: center;
 }
 
 .cgs-element-detail {

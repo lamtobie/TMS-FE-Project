@@ -8,6 +8,7 @@ import { VehicleModel } from "../vehicle/vehicleModel";
 export interface InitDeliverySessionPageState extends InitCategoryPageState<DeliverySessionModel> { }
 
 export interface DeliverySessionLineModel extends TrackableModel {
+    stt?:number,
     code?: string,
     deliverySessionCode?: string,
     deliveryOrderGroupCode?: string,
@@ -20,6 +21,7 @@ export interface DeliverySessionLineModel extends TrackableModel {
     deliveryPackageCode?: string,
     consumedAt?: number,
     consumedBy?: string,
+    status?:string,
 
     // For UI presenation
     hidden?: boolean,
@@ -27,9 +29,13 @@ export interface DeliverySessionLineModel extends TrackableModel {
     message?: string,
 }
 
+export interface DeliverySessionToCreateDto extends TrackableModel {
+    data?:Array<DeliverySessionModel>,
+}
+
 export interface DeliverySessionModel extends TrackableModel {
-    stt:number,
-    code: string,
+    stt?:number,
+    code?: string,
     sessionType?: string,
     parentCode?: string,
     parent?: DeliverySessionModel,
@@ -49,11 +55,12 @@ export interface DeliverySessionModel extends TrackableModel {
     allDeliverySessionLines?: DeliverySessionLineModel[],
     childrens?: DeliverySessionModel[],
     additional?: DataAttributeModel[],
-    status: string,
+    status?: string,
     note?: string,
     excepted?: string,
     reasonCancel?: string,
     reasonReject?: string,
+    createAt?:number,
     totalReceivedItems?: number,
     consumedAt?: number,
     consumedBy?: string,
@@ -73,3 +80,5 @@ export interface DeliverySessionModel extends TrackableModel {
     bVerifyDestBy?: string,
     bVerifyDestAt?: number,
 }
+
+

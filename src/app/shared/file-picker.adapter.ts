@@ -7,15 +7,15 @@ import {
 import { catchError, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import {
-    FilePickerAdapter,
     UploadResponse,
     UploadStatus,
     FilePreviewModel,
 } from 'ngx-awesome-uploader';
 import { environment } from 'environments/environment';
 import { UploadInfo } from 'models/upload/uploadinfo';
+import { FilePickerAdapters } from './file-picker.adapters';
 
-export class FilePickAdapter extends FilePickerAdapter {
+export class FilePickAdapter extends FilePickerAdapters {
     private proDocController: string;
 
     constructor(private http: HttpClient, private option?: UploadInfo) {

@@ -21,7 +21,7 @@
     </div>
         <!-- Actions -->
         <div class="flex shrink-0 items-center mt-4 sm:mt-2 sm:ml-2">
-            <a class="ml-3" mat-flat-button [color]="'primary'">
+            <a class="ml-3" mat-flat-button [color]="'primary'" (click)="moveToSessionAdd()">
                 <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:plus-circle'"></mat-icon>
                 New Handover Session
             </a>
@@ -29,11 +29,7 @@
                 <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:camera'"></mat-icon>
                 Handover Scan
             </a>
-            <a class="ml-3" mat-flat-button [color]="'primary'">
-                <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:receipt-refund'"></mat-icon>
-                Get Refunds
-            </a>
-            <a class="ml-3" mat-flat-button [color]="'primary'">
+            <a class="ml-3" mat-flat-button [color]="'primary'" (click)="exportExcel()">
                 <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:document-report'"></mat-icon>
                 Export
             </a>
@@ -55,21 +51,21 @@
                         <mat-form-field color="primary">
                             <mat-select  [formControlName]="'status'">
                                 <mat-option [value]="''">All status</mat-option>
-                                <mat-option [value]="'ready'">Ready</mat-option>
-                                <mat-option [value]="'standby'">Stand-by</mat-option>
-                                <mat-option [value]="'warranty'">Warranty</mat-option>
-                                <mat-option [value]="'outofservice'">Out of service</mat-option>
-                                <mat-option [value]="'lost'">Lost</mat-option>
+                                <mat-option [value]="'New'">New</mat-option>
+                                <mat-option [value]="'HandedOver'">Handed Over</mat-option>
+                                <mat-option [value]="'Cancelled'">Cancelled</mat-option>
+                                <mat-option [value]="'Confirmed'">Confirmed</mat-option>
+                                <mat-option [value]="'HandOverFailed'">HandOver Failed</mat-option>
+                                <mat-option [value]="'AConfirmed'">A Confirmed</mat-option>
+                                <mat-option [value]="'BConfirmed'">B Confirmed</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field color="primary">
                             <mat-select  [formControlName]="'coordinator'">
                                 <mat-option [value]="''">All Coordinator</mat-option>
-                                <mat-option [value]="'ready'">Ready</mat-option>
-                                <mat-option [value]="'standby'">Stand-by</mat-option>
-                                <mat-option [value]="'warranty'">Warranty</mat-option>
-                                <mat-option [value]="'outofservice'">Out of service</mat-option>
-                                <mat-option [value]="'lost'">Lost</mat-option>
+                                <mat-option *ngFor="let option of coordinatorList" [value]="option.code">
+                                    {{option.fullName +"-"+option.mobilePhone}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -77,31 +73,25 @@
                         <mat-form-field color="primary">
                             <mat-select  [formControlName]="'driver'">
                                 <mat-option [value]="''">All Drivers</mat-option>
-                                <mat-option [value]="'ready'">Ready</mat-option>
-                                <mat-option [value]="'standby'">Stand-by</mat-option>
-                                <mat-option [value]="'warranty'">Warranty</mat-option>
-                                <mat-option [value]="'outofservice'">Out of service</mat-option>
-                                <mat-option [value]="'lost'">Lost</mat-option>
+                                <mat-option *ngFor="let option of driverList" [value]="option.code">
+                                    {{option.fullName +"-"+option.mobilePhone}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field color="primary">
                             <mat-select  [formControlName]="'pickuppoint'">
-                                <mat-option [value]="''">All Pick-up Point</mat-option>
-                                <mat-option [value]="'ready'">Ready</mat-option>
-                                <mat-option [value]="'standby'">Stand-by</mat-option>
-                                <mat-option [value]="'warranty'">Warranty</mat-option>
-                                <mat-option [value]="'outofservice'">Out of service</mat-option>
-                                <mat-option [value]="'lost'">Lost</mat-option>
+                                <mat-option [value]="''">All Start Station</mat-option>
+                                <mat-option *ngFor="let option of startStationList" [value]="option.code">
+                                    {{option.code +"-"+option.name}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field color="primary">
                             <mat-select  [formControlName]="'endpoint'">
-                                <mat-option [value]="''">All End Point</mat-option>
-                                <mat-option [value]="'ready'">Ready</mat-option>
-                                <mat-option [value]="'standby'">Stand-by</mat-option>
-                                <mat-option [value]="'warranty'">Warranty</mat-option>
-                                <mat-option [value]="'outofservice'">Out of service</mat-option>
-                                <mat-option [value]="'lost'">Lost</mat-option>
+                                <mat-option [value]="''">All End Stationt</mat-option>
+                                <mat-option *ngFor="let option of endStationList" [value]="option.code">
+                                    {{option.code +"-"+option.name}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -115,11 +105,11 @@
                             <mat-date-range-picker #picker></mat-date-range-picker>
                         </mat-form-field>
                         <div class="w-full">
-                            <button mat-flat-button color="primary" class="w-full sm:w-30 h-36px-button" >
+                            <button mat-flat-button color="primary" class="w-full sm:w-30 h-36px-button" (click)="getHandoverSessions()">
                                 <mat-icon class="icon-size-5 mr-2" [svgIcon]="'heroicons_outline:search'"></mat-icon>
                                 Search
                             </button>
-                            <button mat-stroked-button color="primary" class="mt-4 md:mt-0 w-50 md:w-auto md:ml-4 h-36px-button" >
+                            <button mat-stroked-button color="primary" class="mt-4 md:mt-0 w-50 md:w-auto md:ml-4 h-36px-button" (click)="refresh()">
                                 <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:refresh'"></mat-icon>
                             </button>
                         </div>
@@ -131,7 +121,7 @@
                             <mat-icon class="icon-size-6" [svgIcon]="'heroicons_solid:puzzle'" [color]="'primary'"></mat-icon>
                             <div class="ml-2 font-medium">Handover Session List</div>
                         </div>
-                        <table mat-table [dataSource]="dataStation"  multiTemplateDataRows class="mat-elevation-z8" id="table">
+                        <table mat-table [dataSource]="dataHandoverSession"  multiTemplateDataRows class="mat-elevation-z8" id="table">
                             <ng-container matColumnDef="stt">
                                 <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
                                     STT
@@ -142,7 +132,7 @@
                             </ng-container>
                             <ng-container matColumnDef="code">
                                 <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Code
+                                    Delevery Session Code
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     {{element.code}}
@@ -153,23 +143,32 @@
                                     Status
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.status}}
+                                    <div [ngSwitch]="element.status">
+                                        <p *ngSwitchCase="'New'">New</p>
+                                        <p *ngSwitchCase="'HandedOver'">Handed Over</p>
+                                        <p *ngSwitchCase="'Cancelled'">Cancelled</p>
+                                        <p *ngSwitchCase="'Confirmed'">Confirmed</p>
+                                        <p *ngSwitchCase="'HandOverFailed'">HandOver Failed</p>
+                                        <p *ngSwitchCase="'PartialConfirm'">Partial Confirm</p>
+                                        <p *ngSwitchCase="'AConfirmed'">A Confirmed</p>
+                                        <p *ngSwitchCase="'BConfirmed'">B Confirmed</p>
+                                    </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="start">
                                 <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Start Point
+                                    Start From Station
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.startStationCode}}
+                                    {{element.startStationCode+'-'+element.startStation.name}}
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="end">
                                 <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    End point
+                                    End To Station
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.endStationCode}}
+                                    {{element.endStationCode+'-'+element.endStation.name}}
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="coordinator">
@@ -177,7 +176,9 @@
                                     Coordinator
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.coordinatorCode}}
+                                    <div *ngIf="element.coordinator!=null">
+                                        <p>{{element.coordinator.fullName+"-"+element.coordinator.mobilePhone}}</p>
+                                    </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="driver">
@@ -185,7 +186,9 @@
                                     Driver
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.driverCode}}
+                                    <div *ngIf="element.driver!=null">
+                                        <p>{{element.driver.fullName +"-"+element.driver.mobilePhone}}</p>
+                                    </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="vehicle">
@@ -193,12 +196,14 @@
                                     Vehicle
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.vehicleCode}}
+                                    <div *ngIf="element.vehicle!=null">
+                                        <p>{{element.vehicle.vehicleTypeInformation.name+' ('+ element.vehicle.numberPlate+')'}}</p>
+                                    </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="dos">
                                 <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Total Number of DO
+                                    Total Number Of DOs
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     {{element.totalDOs}}
@@ -206,7 +211,7 @@
                             </ng-container>
                             <ng-container matColumnDef="pks">
                                 <th mat-header-cell class="cgs-table-header" *matHeaderCellDef>
-                                    Total Number of DP
+                                    Total Number Of DPs
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     {{element.totalDPs}}
@@ -218,12 +223,46 @@
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     <div class="flex items-center">
-                                        <button class="ml-1 -mr-4" mat-icon-button >
-                                            <mat-icon
-                                                class="icon-size-5 text-accent-400"
-                                                [svgIcon]="'heroicons_solid:trash'"
-                                            ></mat-icon>
-                                            
+                                        <button class="mx-auto" mat-icon-button [matTooltip]="element.requestContent" [matTooltipPosition]="'left'" [matMenuTriggerFor]="actionPanel">
+                                                    <mat-icon class="icon-size-6 font-bold" [svgIcon]="'heroicons_outline:dots-circle-horizontal'"></mat-icon>
+                                                    <mat-menu #actionPanel>
+                                                        
+                                                        <button mat-menu-item
+                                                        [matTooltip]="element.note"
+                                                        [matTooltipPosition]="'left'"
+                                                        (click)="viewItem(element.code, $event)"
+                                                        >
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:document-report'"></mat-icon>
+                                                            View detail
+                                                        </button>
+                                                        <button mat-menu-item (click)="editItem(element.code, $event)">
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:cog'"></mat-icon>
+                                                            Edit
+                                                        </button>
+                                                        <button mat-menu-item >
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:lock-open'"></mat-icon>
+                                                            Handover Confirmation
+                                                        </button>
+                                                        <button mat-menu-item >
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:lock-closed'"></mat-icon>
+                                                            Inventory Scan
+                                                        </button>
+                                                        <button mat-menu-item>
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:lock-closed'"></mat-icon>
+                                                            Cancel Session
+                                                        </button>
+                                                        <button mat-menu-item (click)="openGetRefund(element.code)">
+                                                            <mat-icon class="icon-size-4" [svgIcon]="'heroicons_outline:lock-closed'"></mat-icon>
+                                                            Get Refund
+                                                        </button>
+                                                        <button mat-menu-item>
+                                                            <mat-icon
+                                                                class="icon-size-4"
+                                                                [svgIcon]="'heroicons_outline:key'"
+                                                            ></mat-icon>
+                                                            Print Minutes
+                                                        </button>
+                                                    </mat-menu>
                                         </button>
                                     </div>
                                 </td>
@@ -241,16 +280,21 @@
                                                         Create At:
                                                     </div>
                                                     <div class="ml-1.5">
-                                                       abc
+                                                        {{convertNumToDate(element.createdAt)}}
                                                     </div>
                                                 </div>
                                                 <div class="flex items-center leading-5 text-md text-secondary">
                                                     <mat-icon class="icon-size-3 text-hint" [svgIcon]="
                                                             'heroicons_outline:arrow-narrow-right'
                                                         "></mat-icon>
-                                                    <div class="ml-1.5">Start Station:</div>
+                                                    <div class="ml-1.5">Session Type:</div>
                                                     <div class="ml-1.5">
-                                                        abc
+                                                        <div [ngSwitch]="element.sessionType">
+                                                            <p *ngSwitchCase="'Pickup'">Pickup</p>
+                                                            <p *ngSwitchCase="'Dropoff'">Drop off</p>
+                                                            <p *ngSwitchCase="'Refund'">Refund</p>
+                                                            <p *ngSwitchCase="'Transit'">Transit</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="flex items-center leading-5 text-md text-secondary">
@@ -258,10 +302,27 @@
                                                             'heroicons_outline:arrow-narrow-right'
                                                         "></mat-icon>
                                                     <div class="ml-1.5">
-                                                        End address:
+                                                        Reason cancel:
                                                     </div>
                                                     <div class="ml-1.5">
-                                                        abc
+                                                        <div *ngIf="element.reasonCancel!=null">
+                                                            <p>{{element.reasonCancel}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-1 sm:grid-cols-3 mb-2 gap-2 md:gap-3">
+                                                <div class="flex items-center leading-5 text-md text-secondary">
+                                                    <mat-icon class="icon-size-3 text-hint" [svgIcon]="
+                                                            'heroicons_outline:arrow-narrow-right'
+                                                        "></mat-icon>
+                                                    <div class="ml-1.5">
+                                                        Reason reject:
+                                                    </div>
+                                                    <div class="ml-1.5">
+                                                        <div *ngIf="element.reasonReject!=null">
+                                                            <p>{{element.reasonReject}}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
