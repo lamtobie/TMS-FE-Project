@@ -10,7 +10,7 @@ export declare enum UploadStatus {
     IN_PROGRESS = "IN PROGRESS",
     ERROR = "ERROR"
 }
-export declare abstract class FilePickerAdapter {
+export abstract class FilePickerAdapters {
     abstract uploadFile(fileItem: FilePreviewModel,code:string): Observable<UploadResponse>;
     abstract removeFile(fileItem: FilePreviewModel): Observable<any>;
 }
