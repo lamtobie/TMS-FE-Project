@@ -292,7 +292,7 @@ export class DeliveryOder
 
     openAssignDriver(code:string) {
         const newScreen = this._matDialog.open(AssignDriver, {
-          height: "450px",
+          height: "800px",
           width: "600px",
           autoFocus: false,
           data: {orderCode:code},

@@ -91,6 +91,9 @@ export const appRoutes: Route[] = [
             {path: 'changeorderstatus', loadChildren: () => import('app/modules/deliveryorder/changestatus/changestatus.module').then(m => m.ChangeOrderStatusModule)},
             {path: 'assigndriver', loadChildren: () => import('app/modules/deliveryorder/assignDriver/assignDriver.module').then(m => m.AssignDriverModule)},
             {path: 'deliveryorderadd', loadChildren: () => import('app/modules/deliveryorder/deliveryorderadd/deliveryorderadd.module').then(m => m.DeliveryOrderAddModule)},
+            {path: 'handoversessionadd', loadChildren: () => import('app/modules/handoversession/handoversessionadd/handoversessionadd.module').then(m => m.HandoverSessionAddModule)},
+            {path: 'getrefund', loadChildren: () => import('app/modules/handoversession/getrefund/getrefund.module').then(m => m.GetRefundModule)},
+            {path: 'sessioninfo', loadChildren: () => import('app/modules/handoversession/handoversessioninfo/handoversessioninfo.module').then(m => m.HandoverSessionInfoModule)},
             {path: 'cancelorder', loadChildren: () => import('app/modules/deliveryorder/cancelorder/cancelorder.module').then(m => m.CancelOrderModule)},
 
         ]
